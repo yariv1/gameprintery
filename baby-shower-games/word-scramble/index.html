@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Printable Baby Shower Word Scramble</title>
+<meta name="description" content="Free printable baby shower word scramble with 3 difficulty levels. Instant PDF worksheet plus a matching answer key — no email, no signup.">
+<link rel="canonical" href="https://gameprintery.com/baby-shower-games/word-scramble/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  :root{ --wsc:#E79AA2; }
+
+  /* Color swatches */
+  .swatch-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+  .swatch-row .swatch-label{font-weight:700;font-size:13px;margin-right:2px}
+  .swatch{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid #fff;
+    box-shadow:0 0 0 1.5px var(--line);position:relative;transition:.12s}
+  .swatch:hover{transform:scale(1.08)}
+  .swatch.sel{box-shadow:0 0 0 3px var(--sw)}
+  .swatch.sel::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;color:#fff;font-size:16px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .swatch:focus-visible{outline:3px solid #8FB49A;outline-offset:3px}
+
+  /* Segmented controls (word count / difficulty) */
+  .seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{font-family:'Baloo 2';font-weight:700;font-size:13.5px;border:none;background:#fff;
+    color:var(--ink-soft);padding:8px 14px;cursor:pointer;transition:.12s}
+  .seg button+button{border-left:1px solid var(--line)}
+  .seg button.sel{background:var(--accent);color:#fff}
+  .seg button:hover:not(.sel){background:#FFF3F1}
+  .seg button:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
+  .seg-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .seg-group .swatch-label{display:inline-block;min-width:84px}
+  .control-rows{display:flex;flex-direction:column;gap:12px}
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;margin-top:12px}
+  .toggle{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;cursor:pointer}
+  .toggle input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+
+  /* Worksheet */
+  .worksheet{margin-top:18px}
+  .ws-row{display:flex;align-items:baseline;gap:10px;padding:9px 4px;border-bottom:1px dashed var(--line)}
+  .ws-num{font-weight:700;color:var(--wsc);width:22px;flex-shrink:0}
+  .ws-scrambled{font-family:'Baloo 2';font-weight:800;letter-spacing:2px;color:var(--wsc);
+    min-width:110px}
+  .ws-blank{flex:1;border-bottom:1.5px solid var(--line);align-self:flex-end;height:1px;margin:0 6px}
+  .ws-answer{display:none;font-weight:700;color:#3f5a45;min-width:100px}
+  .worksheet.show-answers .ws-answer{display:inline}
+  .worksheet.lg .ws-scrambled{font-size:22px}
+  .worksheet.lg .ws-answer{font-size:18px}
+  .worksheet.lg .ws-num{font-size:18px}
+
+  @media (max-width:520px){
+    .ws-scrambled{min-width:88px}
+    .toolbar{gap:12px 16px;padding:0 6px}
+    .panel h2,.panel .hint,.seg-group,.swatch-row{padding:0 6px}
+  }
+
+  #printArea{position:absolute;left:-99999px;top:0}
+  @media print{
+    .wrap{display:none !important}
+    #printArea{position:static;left:0}
+    .print-page{padding:26px;page-break-after:always}
+    .print-page:last-child{page-break-after:auto}
+    .print-page h2{font-family:'Baloo 2';font-size:24px;text-align:center;margin:0 0 22px}
+    .print-row{display:flex;align-items:baseline;gap:12px;padding:9px 4px;border-bottom:1px dashed var(--line);font-size:15px}
+    .print-row .n{font-weight:700;width:26px;color:var(--wsc)}
+    .print-row .scrambled{font-weight:800;letter-spacing:2px;color:var(--wsc)}
+    .print-row .blank{flex:1;border-bottom:1px solid var(--ink);height:1px;margin-left:12px}
+    .print-row.answer-row .word{font-weight:700;color:var(--wsc)}
+    .print-row .n,.print-row .scrambled,.print-row.answer-row .word{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .print-page.lg .print-row{font-size:18px}
+    .print-page.lg .print-row .n{width:30px;font-size:18px}
+    .print-page.lg .print-row .scrambled{font-size:22px}
+    .print-page.lg .print-row.answer-row .word{font-size:20px}
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="home-btn" href="/" aria-label="Home">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg>
+  </a>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/baby-shower-games/">Baby Shower Games</a> › <span class="crumb-current">Word Scramble</span></nav>
+</header>
+
+<div class="wrap" style="margin-top:-40px">
+  <div class="hero">
+    <h1>Free Printable Baby Shower Word Scramble</h1>
+    <div class="deco">SCRAMBLE</div>
+    <div class="deco-sub">Baby Shower Edition</div>
+    <p>Unscramble baby-themed words solo or as a group — comes with a matching answer key. Instant PDF, no email, no signup.</p>
+    <div class="badges">
+      <span class="badge pink">✓ Instant PDF — no email</span>
+      <span class="badge">✓ Answer key included</span>
+      <span class="badge pink">✓ 3 difficulty levels</span>
+      <span class="badge">✓ Free for commercial use</span>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>1. Choose your game</h2>
+    <p class="hint">Pick word count and difficulty, shuffle to preview, then download below.</p>
+
+    <div class="swatch-row" id="swatches">
+      <span class="swatch-label">Color:</span>
+    </div>
+
+    <div class="control-rows">
+      <div class="seg-group">
+        <span class="swatch-label">Words:</span>
+        <div class="seg" id="countSeg">
+          <button data-val="10">10</button>
+          <button data-val="15">15</button>
+          <button data-val="20" class="sel">20</button>
+        </div>
+      </div>
+      <div class="seg-group">
+        <span class="swatch-label">Difficulty:</span>
+        <div class="seg" id="diffSeg">
+          <button data-val="easy">Easy</button>
+          <button data-val="medium" class="sel">Medium</button>
+          <button data-val="hard">Hard</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn ghost" id="reshuffle">↻ Shuffle</button>
+      <label class="toggle"><input type="checkbox" id="largePrint"> Large print</label>
+      <button class="btn ghost" id="toggleAnswers">Show answers</button>
+    </div>
+
+    <div class="worksheet" id="worksheet"></div>
+  </section>
+
+  <section class="panel">
+    <h2>2. Download &amp; print</h2>
+    <p class="hint">Get a printable worksheet plus a matching answer key.</p>
+    <div class="btn-row">
+      <button class="btn primary" id="dlPdf">Download worksheet + answer key (PDF)</button>
+    </div>
+    <p class="foot-note">Two pages: the scrambled worksheet, then the answer key — matching your current settings.</p>
+  </section>
+</div>
+
+<div id="printArea"></div>
+
+<footer class="site-footer">
+  <nav class="more-games">
+    <h2>More games</h2>
+    <ul>
+      <li><a href="/baby-shower-games/">← All Baby Shower Games</a></li>
+      <li><a href="/baby-shower-games/bingo/">Bingo</a></li>
+      <li><a href="/baby-shower-games/word-search/">Word Search</a></li>
+      <li><a href="/baby-shower-games/how-well-do-you-know-mommy/">How Well Do You Know Mommy</a></li>
+      <li><a href="/baby-shower-games/emoji-pictionary/">Emoji Pictionary</a></li>
+      <li><a href="/baby-shower-games/trivia/">Trivia</a></li>
+    </ul>
+  </nav>
+  <nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="/baby-shower-games/">Baby Shower Games</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/about.html">About</a>
+  </nav>
+  <p class="license"><strong>License:</strong> free to print and use for personal parties, classrooms,
+    and paid/commercial events. Please don't resell the files themselves.</p>
+  <!-- ADSENSE SLOT -->
+  <div class="ad-slot"></div>
+  <p class="copyright">&copy; 2026 GamePrintery</p>
+</footer>
+
+<script>
+const WORDS = ["BOTTLE","STROLLER","PACIFIER","DIAPER","BLANKET","RATTLE","ONESIE","BOOTIES",
+  "LULLABY","CRADLE","BIB","TEETHER","NURSERY","SWADDLE","MOBILE","MITTENS","CARRIAGE",
+  "FORMULA","GIGGLE","WIPES"];
+
+function shuffleArr(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+
+function scrambleWord(word,diff){
+  let arr,result,attempts=0;
+  do{
+    arr=word.split('');
+    if(diff==='easy'){
+      if(arr.length>1){
+        const i=Math.floor(Math.random()*(arr.length-1));
+        [arr[i],arr[i+1]]=[arr[i+1],arr[i]];
+      }
+    } else if(diff==='medium'){
+      const swaps=Math.max(1,Math.floor(arr.length/2));
+      for(let k=0;k<swaps;k++){
+        const i=Math.floor(Math.random()*(arr.length-1));
+        [arr[i],arr[i+1]]=[arr[i+1],arr[i]];
+      }
+    } else {
+      arr=shuffleArr(arr);
+    }
+    result=arr.join('');
+    attempts++;
+  } while(result===word && attempts<30);
+  return result;
+}
+
+const THEMES = [
+  {id:"blush",   name:"Blush",       color:"#E79AA2"},
+  {id:"sage",    name:"Sage",        color:"#8FB49A"},
+  {id:"blue",    name:"Powder Blue", color:"#7FA0C8"},
+  {id:"sunshine",name:"Sunshine",    color:"#D9A55A"},
+  {id:"bw",      name:"B&W",         color:"#4B4650"}
+];
+let selectedTheme = THEMES[0];
+const swatches=document.getElementById('swatches');
+
+function buildSwatches(){
+  THEMES.forEach(t=>{
+    const b=document.createElement('button');
+    b.className='swatch'; b.dataset.id=t.id;
+    b.style.background=t.color; b.style.setProperty('--sw',t.color);
+    b.setAttribute('aria-label',t.name);
+    b.onclick=()=>{ selectedTheme=t; document.documentElement.style.setProperty('--wsc', t.color); refreshSwatches(); };
+    swatches.appendChild(b);
+  });
+  refreshSwatches();
+}
+function refreshSwatches(){
+  document.querySelectorAll('.swatch').forEach(s=>s.classList.toggle('sel', s.dataset.id===selectedTheme.id));
+}
+buildSwatches();
+document.documentElement.style.setProperty('--wsc', selectedTheme.color);
+
+let wordCount=20, difficulty='medium', currentSet=[];
+
+function setupSeg(id,onSelect){
+  const el=document.getElementById(id);
+  el.querySelectorAll('button').forEach(b=>{
+    b.onclick=()=>{
+      el.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      onSelect(b.dataset.val);
+    };
+  });
+}
+setupSeg('countSeg', v=>{ wordCount=parseInt(v,10); generate(); });
+setupSeg('diffSeg', v=>{ difficulty=v; generate(); });
+
+function generate(){
+  currentSet = WORDS.slice(0, wordCount).map(w=>({word:w, scrambled:scrambleWord(w,difficulty)}));
+  renderWorksheet();
+}
+function renderWorksheet(){
+  const el=document.getElementById('worksheet');
+  el.innerHTML=currentSet.map((c,i)=>`
+    <div class="ws-row">
+      <span class="ws-num">${i+1}.</span>
+      <span class="ws-scrambled">${c.scrambled}</span>
+      <span class="ws-blank"></span>
+      <span class="ws-answer">${c.word}</span>
+    </div>`).join('');
+}
+document.getElementById('reshuffle').onclick=generate;
+
+const largePrintEl=document.getElementById('largePrint');
+largePrintEl.onchange=()=>{ document.getElementById('worksheet').classList.toggle('lg', largePrintEl.checked); };
+
+const toggleAnswersBtn=document.getElementById('toggleAnswers');
+let answersShown=false;
+toggleAnswersBtn.onclick=()=>{
+  answersShown=!answersShown;
+  document.getElementById('worksheet').classList.toggle('show-answers', answersShown);
+  toggleAnswersBtn.textContent = answersShown ? 'Hide answers' : 'Show answers';
+};
+
+function printWorksheet(){
+  const area=document.getElementById('printArea');
+  const lgClass = largePrintEl.checked ? ' lg' : '';
+  const rows1=currentSet.map((c,i)=>`<div class="print-row"><span class="n">${i+1}.</span><span class="scrambled">${c.scrambled}</span><span class="blank"></span></div>`).join('');
+  const rows2=currentSet.map((c,i)=>`<div class="print-row answer-row"><span class="n">${i+1}.</span><span class="word">${c.word}</span></div>`).join('');
+  area.innerHTML=`
+    <div class="print-page${lgClass}">
+      <h2>Baby Shower Word Scramble</h2>
+      ${rows1}
+    </div>
+    <div class="print-page${lgClass}">
+      <h2>Answer Key</h2>
+      ${rows2}
+    </div>`;
+  setTimeout(()=>window.print(),60);
+}
+document.getElementById('dlPdf').onclick=printWorksheet;
+
+generate();
+</script>
+</body>
+</html>

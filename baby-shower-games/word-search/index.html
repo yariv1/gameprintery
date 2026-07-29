@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Printable Baby Shower Word Search</title>
+<meta name="description" content="Free printable baby shower word search puzzle with a matching answer key. Choose your word count and difficulty, then download an instant PDF — no email, no signup.">
+<link rel="canonical" href="https://gameprintery.com/baby-shower-games/word-search/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  :root{ --wsc:#E79AA2; }
+
+  /* Color swatches */
+  .swatch-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+  .swatch-row .swatch-label{font-weight:700;font-size:13px;margin-right:2px}
+  .swatch{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid #fff;
+    box-shadow:0 0 0 1.5px var(--line);position:relative;transition:.12s}
+  .swatch:hover{transform:scale(1.08)}
+  .swatch.sel{box-shadow:0 0 0 3px var(--sw)}
+  .swatch.sel::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;color:#fff;font-size:16px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .swatch:focus-visible{outline:3px solid #8FB49A;outline-offset:3px}
+
+  /* Segmented controls (word count / difficulty) */
+  .seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{font-family:'Baloo 2';font-weight:700;font-size:13.5px;border:none;background:#fff;
+    color:var(--ink-soft);padding:8px 14px;cursor:pointer;transition:.12s}
+  .seg button+button{border-left:1px solid var(--line)}
+  .seg button.sel{background:var(--accent);color:#fff}
+  .seg button:hover:not(.sel){background:#FFF3F1}
+  .seg button:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
+  .seg-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .seg-group .swatch-label{display:inline-block;min-width:84px}
+  .control-rows{display:flex;flex-direction:column;gap:12px}
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;margin-top:12px}
+  .toggle{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;cursor:pointer}
+  .toggle input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+
+  /* Puzzle grid + word bank */
+  .puzzle-wrap{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;justify-content:center;margin-top:18px}
+  .grid-scroll{overflow-x:auto;max-width:100%;padding:4px}
+  .ws-grid{position:relative;display:grid;gap:2px;background:#FFFDFC;border:2px solid var(--wsc);
+    border-radius:8px;padding:2px;width:max-content;transition:border-color .15s}
+  .ws-grid .cell{position:relative;z-index:1;width:26px;height:26px;display:flex;align-items:center;
+    justify-content:center;background:#FFFDFC;font-weight:700;font-size:13px;color:var(--ink);
+    border-radius:3px;transition:.1s}
+  .ws-grid.lg .cell{width:34px;height:34px;font-size:16px}
+  .ws-grid.show-solution .cell.sol{background:transparent}
+  .pill-layer{position:absolute;inset:0;pointer-events:none;z-index:0}
+  .word-pill{position:absolute;background:color-mix(in srgb, var(--wsc) 38%, white);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .word-bank{min-width:160px}
+  .word-bank h3{font-family:'Baloo 2';font-size:15px;margin:0 0 10px;color:var(--ink)}
+  .word-list{display:grid;grid-template-columns:repeat(2,1fr);gap:7px 16px;
+    font-weight:700;font-size:13.5px;color:var(--wsc)}
+
+  /* Expand / zoom */
+  .stage-wrap{position:relative}
+  .expand-btn{position:absolute;top:8px;right:8px;width:38px;height:38px;border-radius:10px;
+    background:rgba(255,255,255,.92);border:1px solid var(--line);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--ink-soft);
+    transition:.15s;z-index:3;box-shadow:0 3px 10px rgba(0,0,0,.08)}
+  .expand-btn:hover{color:var(--ink)}
+  .zoom{position:fixed;inset:0;background:rgba(60,50,55,.6);display:none;
+    align-items:center;justify-content:center;padding:16px;z-index:60;overflow:auto}
+  .zoom.open{display:flex}
+  .zoom-close{position:absolute;top:16px;right:18px;width:44px;height:44px;border-radius:50%;
+    background:#fff;border:none;cursor:pointer;font-size:20px;color:var(--ink);
+    display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:2}
+  .zoom-puzzle{display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:center;
+    background:#fff;padding:32px;border-radius:16px;max-width:94vw;max-height:88vh;overflow:auto}
+  .zoom-scale{zoom:1.6}
+
+  @media (max-width:520px){
+    .toolbar{gap:12px 16px;padding:0 6px}
+    .panel h2,.panel .hint,.seg-group,.swatch-row{padding:0 6px}
+    .puzzle-wrap{justify-content:flex-start}
+  }
+
+  /* Print content structure — always defined (not scoped to @media print) so JS can
+     measure real cell positions for the answer-key pill highlight at any time; the
+     #printArea host itself stays permanently off-screen either way. */
+  #printArea{position:absolute;left:-99999px;top:0}
+  .print-page{padding:26px}
+  .print-page.page2{page-break-before:always}
+  .print-page h2{font-family:'Baloo 2';font-size:22px;text-align:center;margin:0 0 18px}
+  .print-grid{position:relative;display:grid;gap:1px;background:#fff;border:1.5px solid var(--wsc);
+    margin:0 auto 22px;width:max-content}
+  .print-grid .cell{position:relative;z-index:1;width:var(--cellpx,22px);height:var(--cellpx,22px);
+    display:flex;align-items:center;justify-content:center;background:#fff;font-weight:700;
+    font-size:var(--fontpx,12px);color:#4B4650}
+  .print-grid.answers .cell.sol{background:transparent}
+  .print-grid .cell,.print-grid{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .print-words{display:grid;grid-template-columns:repeat(4,1fr);gap:7px 16px;
+    font-weight:700;font-size:12.5px;max-width:520px;margin:0 auto;text-align:center;color:var(--wsc)}
+
+  @media print{
+    .wrap{display:none !important}
+    #printArea{position:static;left:0}
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="home-btn" href="/" aria-label="Home">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg>
+  </a>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/baby-shower-games/">Baby Shower Games</a> › <span class="crumb-current">Word Search</span></nav>
+</header>
+
+<div class="wrap" style="margin-top:-40px">
+  <div class="hero">
+    <h1>Free Printable Baby Shower Word Search</h1>
+    <div class="deco">SEARCH</div>
+    <div class="deco-sub">Baby Shower Edition</div>
+    <p>Find baby-themed words hidden in the grid — comes with a matching answer key. Instant PDF, no email, no signup.</p>
+    <div class="badges">
+      <span class="badge pink">✓ Instant PDF — no email</span>
+      <span class="badge">✓ Answer key included</span>
+      <span class="badge pink">✓ Easy or hard mode</span>
+      <span class="badge">✓ Free for commercial use</span>
+    </div>
+  </div>
+
+  <!-- ADSENSE SLOT -->
+  <div class="ad-slot" style="margin-top:-80px"></div>
+
+  <section class="panel">
+    <h2>1. Choose your game</h2>
+    <p class="hint">Pick word count and difficulty, shuffle to preview, then download below.</p>
+
+    <div class="swatch-row" id="swatches">
+      <span class="swatch-label">Color:</span>
+    </div>
+
+    <div class="control-rows">
+      <div class="seg-group">
+        <span class="swatch-label">Words:</span>
+        <div class="seg" id="countSeg">
+          <button data-val="10">10</button>
+          <button data-val="15">15</button>
+          <button data-val="20" class="sel">20</button>
+        </div>
+      </div>
+      <div class="seg-group">
+        <span class="swatch-label">Difficulty:</span>
+        <div class="seg" id="diffSeg">
+          <button data-val="easy" class="sel">Easy</button>
+          <button data-val="hard">Hard</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn ghost" id="reshuffle">↻ Shuffle</button>
+      <label class="toggle"><input type="checkbox" id="largePrint"> Large print</label>
+      <button class="btn ghost" id="toggleAnswers">Show answers</button>
+    </div>
+
+    <div class="stage-wrap">
+      <button class="expand-btn" id="expandBtn" aria-label="Expand puzzle" title="Expand">⤢</button>
+      <div class="puzzle-wrap">
+        <div class="grid-scroll">
+          <div class="ws-grid" id="wsGrid"></div>
+        </div>
+        <div class="word-bank">
+          <h3>Find these words:</h3>
+          <div class="word-list" id="wordList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>2. Download &amp; print</h2>
+    <p class="hint">Get a printable puzzle plus a matching answer key.</p>
+    <div class="btn-row">
+      <button class="btn primary" id="dlPdf">Download puzzle + answer key (PDF)</button>
+    </div>
+    <p class="foot-note">Two pages: the puzzle, then the answer key — matching your current settings.</p>
+  </section>
+</div>
+
+<div class="zoom" id="zoom">
+  <button class="zoom-close" id="zoomClose" aria-label="Close">✕</button>
+  <div class="zoom-puzzle" id="zoomBody"></div>
+</div>
+
+<div id="printArea"></div>
+
+<footer class="site-footer">
+  <nav class="more-games">
+    <h2>More games</h2>
+    <ul>
+      <li><a href="/baby-shower-games/">← All Baby Shower Games</a></li>
+      <li><a href="/baby-shower-games/bingo/">Bingo</a></li>
+      <li><a href="/baby-shower-games/word-scramble/">Word Scramble</a></li>
+      <li><a href="/baby-shower-games/how-well-do-you-know-mommy/">How Well Do You Know Mommy</a></li>
+      <li><a href="/baby-shower-games/emoji-pictionary/">Emoji Pictionary</a></li>
+      <li><a href="/baby-shower-games/trivia/">Trivia</a></li>
+    </ul>
+  </nav>
+  <nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="/baby-shower-games/">Baby Shower Games</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/about.html">About</a>
+  </nav>
+  <p class="license"><strong>License:</strong> free to print and use for personal parties, classrooms,
+    and paid/commercial events. Please don't resell the files themselves.</p>
+  <!-- ADSENSE SLOT -->
+  <div class="ad-slot"></div>
+  <p class="copyright">&copy; 2026 GamePrintery</p>
+</footer>
+
+<script>
+const WORDS = ["BOTTLE","STROLLER","PACIFIER","DIAPER","BLANKET","RATTLE","ONESIE","BOOTIES",
+  "LULLABY","CRADLE","BIB","TEETHER","NURSERY","SWADDLE","MOBILE","MITTENS","CARRIAGE",
+  "FORMULA","GIGGLE","WIPES"];
+
+const SIZE_MAP = {10:11, 15:13, 20:15};
+const DIRS_EASY = [{dr:0,dc:1},{dr:1,dc:0}];
+const DIRS_HARD = [{dr:0,dc:1},{dr:1,dc:0},{dr:1,dc:1}];
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+function canPlace(grid,size,word,row,col,dr,dc){
+  for(let i=0;i<word.length;i++){
+    const r=row+dr*i, c=col+dc*i;
+    if(r<0||r>=size||c<0||c>=size) return false;
+    const existing=grid[r][c];
+    if(existing!==null && existing!==word[i]) return false;
+  }
+  return true;
+}
+
+function fillEmpty(grid,size){
+  for(let r=0;r<size;r++) for(let c=0;c<size;c++) if(!grid[r][c]) grid[r][c]=LETTERS[Math.floor(Math.random()*26)];
+}
+
+function tryBuildGrid(words,size,dirs){
+  const grid=Array.from({length:size},()=>Array(size).fill(null));
+  const solution=[];
+  const sorted=[...words].sort((a,b)=>b.length-a.length);
+  for(const word of sorted){
+    let placed=false;
+    for(let t=0;t<200 && !placed;t++){
+      const d=dirs[Math.floor(Math.random()*dirs.length)];
+      const row=Math.floor(Math.random()*size);
+      const col=Math.floor(Math.random()*size);
+      if(canPlace(grid,size,word,row,col,d.dr,d.dc)){
+        const cells=[];
+        for(let i=0;i<word.length;i++){
+          const r=row+d.dr*i, c=col+d.dc*i;
+          grid[r][c]=word[i];
+          cells.push([r,c]);
+        }
+        solution.push({word,cells});
+        placed=true;
+      }
+    }
+    if(!placed) return null;
+  }
+  fillEmpty(grid,size);
+  return {grid,solution};
+}
+
+function forceBuildGrid(words,size,dirs){
+  const grid=Array.from({length:size},()=>Array(size).fill(null));
+  const solution=[];
+  const sorted=[...words].sort((a,b)=>b.length-a.length);
+  for(const word of sorted){
+    let bestPos=null;
+    for(let row=0;row<size && !bestPos;row++){
+      for(let col=0;col<size && !bestPos;col++){
+        for(const d of dirs){
+          if(canPlace(grid,size,word,row,col,d.dr,d.dc)){ bestPos={row,col,d}; break; }
+        }
+      }
+    }
+    if(bestPos){
+      const cells=[];
+      for(let i=0;i<word.length;i++){
+        const r=bestPos.row+bestPos.d.dr*i, c=bestPos.col+bestPos.d.dc*i;
+        grid[r][c]=word[i];
+        cells.push([r,c]);
+      }
+      solution.push({word,cells});
+    }
+  }
+  fillEmpty(grid,size);
+  return {grid,solution};
+}
+
+function buildGrid(words,size,dirs){
+  for(let attempt=0;attempt<20;attempt++){
+    const result=tryBuildGrid(words,size,dirs);
+    if(result) return result;
+  }
+  return forceBuildGrid(words,size,dirs);
+}
+
+function solutionCellSet(solution){
+  const set=new Set();
+  solution.forEach(item=>item.cells.forEach(([r,c])=>set.add(r+','+c)));
+  return set;
+}
+
+// Draws one continuous rounded "pill" band per solution word, spanning from its first
+// letter to its last, at whatever angle the word was placed (horizontal/vertical/diagonal).
+// Positions are measured from the real rendered cells, so this works identically for the
+// on-screen grid and the print grid without duplicating any pixel math between the two.
+function addPillLayer(gridEl,solution){
+  const old=gridEl.querySelector('.pill-layer');
+  if(old) old.remove();
+  const layer=document.createElement('div');
+  layer.className='pill-layer';
+  const gridRect=gridEl.getBoundingClientRect();
+  solution.forEach(({cells})=>{
+    const first=cells[0], last=cells[cells.length-1];
+    const firstEl=gridEl.querySelector(`[data-r="${first[0]}"][data-c="${first[1]}"]`);
+    const lastEl=gridEl.querySelector(`[data-r="${last[0]}"][data-c="${last[1]}"]`);
+    if(!firstEl||!lastEl) return;
+    const r1=firstEl.getBoundingClientRect(), r2=lastEl.getBoundingClientRect();
+    const cx1=r1.left+r1.width/2-gridRect.left, cy1=r1.top+r1.height/2-gridRect.top;
+    const cx2=r2.left+r2.width/2-gridRect.left, cy2=r2.top+r2.height/2-gridRect.top;
+    const dx=cx2-cx1, dy=cy2-cy1;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    const length=dist+r1.width;
+    const thickness=r1.height*0.72;
+    const angle=Math.atan2(dy,dx)*180/Math.PI;
+    const midX=(cx1+cx2)/2, midY=(cy1+cy2)/2;
+    const pill=document.createElement('div');
+    pill.className='word-pill';
+    pill.style.left=midX+'px';
+    pill.style.top=midY+'px';
+    pill.style.width=length+'px';
+    pill.style.height=thickness+'px';
+    pill.style.borderRadius=(thickness/2)+'px';
+    pill.style.transform=`translate(-50%,-50%) rotate(${angle}deg)`;
+    layer.appendChild(pill);
+  });
+  gridEl.appendChild(layer);
+}
+
+const THEMES = [
+  {id:"blush",   name:"Blush",       color:"#E79AA2"},
+  {id:"sage",    name:"Sage",        color:"#8FB49A"},
+  {id:"blue",    name:"Powder Blue", color:"#7FA0C8"},
+  {id:"sunshine",name:"Sunshine",    color:"#D9A55A"},
+  {id:"bw",      name:"B&W",         color:"#4B4650"}
+];
+let selectedTheme = THEMES[0];
+const swatches=document.getElementById('swatches');
+
+function buildSwatches(){
+  THEMES.forEach(t=>{
+    const b=document.createElement('button');
+    b.className='swatch'; b.dataset.id=t.id;
+    b.style.background=t.color; b.style.setProperty('--sw',t.color);
+    b.setAttribute('aria-label',t.name);
+    b.onclick=()=>{ selectedTheme=t; document.documentElement.style.setProperty('--wsc', t.color); refreshSwatches(); };
+    swatches.appendChild(b);
+  });
+  refreshSwatches();
+}
+function refreshSwatches(){
+  document.querySelectorAll('.swatch').forEach(s=>s.classList.toggle('sel', s.dataset.id===selectedTheme.id));
+}
+buildSwatches();
+document.documentElement.style.setProperty('--wsc', selectedTheme.color);
+
+let wordCount=20, difficulty='easy';
+let currentWords=[], currentSize=15, currentGrid=[], currentSolution=[];
+
+function setupSeg(id,onSelect){
+  const el=document.getElementById(id);
+  el.querySelectorAll('button').forEach(b=>{
+    b.onclick=()=>{
+      el.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      onSelect(b.dataset.val);
+    };
+  });
+}
+setupSeg('countSeg', v=>{ wordCount=parseInt(v,10); generate(); });
+setupSeg('diffSeg', v=>{ difficulty=v; generate(); });
+
+function generate(){
+  currentWords = WORDS.slice(0, wordCount);
+  currentSize = SIZE_MAP[wordCount];
+  const dirs = difficulty==='hard' ? DIRS_HARD : DIRS_EASY;
+  const built = buildGrid(currentWords, currentSize, dirs);
+  currentGrid = built.grid;
+  currentSolution = built.solution;
+  renderGrid();
+  renderWordList();
+}
+
+const largePrintEl=document.getElementById('largePrint');
+
+function renderGrid(){
+  const el=document.getElementById('wsGrid');
+  const px = largePrintEl.checked ? 34 : 26;
+  el.style.gridTemplateColumns = `repeat(${currentSize}, ${px}px)`;
+  el.classList.toggle('lg', largePrintEl.checked);
+  const solSet = solutionCellSet(currentSolution);
+  let html='';
+  for(let r=0;r<currentSize;r++){
+    for(let c=0;c<currentSize;c++){
+      const isSol = solSet.has(r+','+c);
+      html += `<div class="cell${isSol?' sol':''}" data-r="${r}" data-c="${c}">${currentGrid[r][c]}</div>`;
+    }
+  }
+  el.innerHTML = html;
+  addPillLayer(el, currentSolution);
+}
+function renderWordList(){
+  document.getElementById('wordList').innerHTML = currentWords.map(w=>`<span>${w}</span>`).join('');
+}
+
+document.getElementById('reshuffle').onclick=generate;
+largePrintEl.onchange=renderGrid;
+
+const toggleAnswersBtn=document.getElementById('toggleAnswers');
+let answersShown=false;
+toggleAnswersBtn.onclick=()=>{
+  answersShown=!answersShown;
+  document.getElementById('wsGrid').classList.toggle('show-solution', answersShown);
+  toggleAnswersBtn.textContent = answersShown ? 'Hide answers' : 'Show answers';
+};
+
+const zoom=document.getElementById('zoom'), zoomBody=document.getElementById('zoomBody');
+function openZoom(){
+  // Clone the exact live grid + word list (same classes, same inline styles, same
+  // solution/lg state) so the zoomed view is guaranteed identical to the small view —
+  // just scaled up via CSS zoom, never re-implemented.
+  zoomBody.innerHTML='';
+  const scaleWrap=document.createElement('div');
+  scaleWrap.className='zoom-scale';
+  const puzzleWrap=document.createElement('div');
+  puzzleWrap.className='puzzle-wrap';
+
+  const gridClone=document.getElementById('wsGrid').cloneNode(true);
+  gridClone.removeAttribute('id');
+  const gridScroll=document.createElement('div');
+  gridScroll.appendChild(gridClone);
+
+  const wordBank=document.createElement('div');
+  wordBank.className='word-bank';
+  wordBank.innerHTML='<h3>Find these words:</h3>';
+  const wordsClone=document.getElementById('wordList').cloneNode(true);
+  wordsClone.removeAttribute('id');
+  wordBank.appendChild(wordsClone);
+
+  puzzleWrap.appendChild(gridScroll);
+  puzzleWrap.appendChild(wordBank);
+  scaleWrap.appendChild(puzzleWrap);
+  zoomBody.appendChild(scaleWrap);
+  zoom.classList.add('open');
+}
+function closeZoom(){ zoom.classList.remove('open'); }
+document.getElementById('expandBtn').onclick=openZoom;
+document.getElementById('zoomClose').onclick=closeZoom;
+zoom.addEventListener('click',e=>{ if(e.target===zoom) closeZoom(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeZoom(); });
+
+function renderPrintGrid(grid,size,solSet,cellPx,idAttr){
+  const fontPx = Math.max(13, Math.min(28, Math.round(cellPx*0.45)));
+  let cells='';
+  for(let r=0;r<size;r++){
+    for(let c=0;c<size;c++){
+      const isSol = solSet && solSet.has(r+','+c);
+      cells += `<div class="cell${isSol?' sol':''}" data-r="${r}" data-c="${c}">${grid[r][c]}</div>`;
+    }
+  }
+  const idPart = idAttr ? ` id="${idAttr}"` : '';
+  return `<div class="print-grid${solSet?' answers':''}"${idPart} style="grid-template-columns:repeat(${size},${cellPx}px);--cellpx:${cellPx}px;--fontpx:${fontPx}px">${cells}</div>`;
+}
+
+function printPuzzle(){
+  const area=document.getElementById('printArea');
+  const solSet = solutionCellSet(currentSolution);
+  // Page 1 shares the page with the word list below, page 2 is grid-only — size each
+  // to fill as much of the printable page as possible while keeping cells perfectly square.
+  const cellPx1 = Math.floor(520 / currentSize);
+  const cellPx2 = Math.floor(620 / currentSize);
+  const gridPlain = renderPrintGrid(currentGrid, currentSize, null, cellPx1);
+  const gridAnswers = renderPrintGrid(currentGrid, currentSize, solSet, cellPx2, 'printAnswersGrid');
+  const wordsHtml = currentWords.map(w=>`<span>${w}</span>`).join('');
+  area.innerHTML = `
+    <div class="print-page">
+      <h2>Baby Shower Word Search</h2>
+      ${gridPlain}
+      <div class="print-words">${wordsHtml}</div>
+    </div>
+    <div class="print-page page2">
+      <h2>Answer Key</h2>
+      ${gridAnswers}
+    </div>`;
+  addPillLayer(document.getElementById('printAnswersGrid'), currentSolution);
+  setTimeout(()=>window.print(),60);
+}
+document.getElementById('dlPdf').onclick=printPuzzle;
+
+generate();
+</script>
+</body>
+</html>

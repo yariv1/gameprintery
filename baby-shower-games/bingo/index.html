@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Printable Baby Shower Bingo (unique cards) — GamePrintery</title>
+<meta name="description" content="Free printable baby shower bingo cards. Pick a color and print unique cards for every guest — instant PDF, no email, no signup.">
+<link rel="canonical" href="https://gameprintery.com/baby-shower-games/bingo/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  :root{
+    --t-border:#E79AA2; --t-free-bg:#F6D5D8; --t-free-text:#8a4a52;
+  }
+
+  /* Color swatches */
+  .swatch-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+  .swatch-label{font-weight:700;font-size:13px;margin-right:2px}
+  .swatch{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid #fff;
+    box-shadow:0 0 0 1.5px var(--line);position:relative;transition:.12s}
+  .swatch:hover{transform:scale(1.08)}
+  .swatch.sel{box-shadow:0 0 0 3px var(--sw)}
+  .swatch.sel::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;color:#fff;font-size:16px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .swatch:focus-visible{outline:3px solid #8FB49A;outline-offset:3px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:16px 22px;align-items:center;margin-bottom:20px}
+  .toggle{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;cursor:pointer}
+  .toggle input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+
+  /* One clear preview card */
+  .card-stage{display:flex;justify-content:center}
+  .stage-wrap{position:relative;width:100%;max-width:500px;margin:0 auto}
+  .expand-btn{position:absolute;top:8px;right:8px;width:38px;height:38px;border-radius:10px;
+    background:rgba(255,255,255,.92);border:1px solid var(--line);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--ink-soft);
+    opacity:0;transition:.15s;z-index:3;box-shadow:0 3px 10px rgba(0,0,0,.08)}
+  .stage-wrap:hover .expand-btn{opacity:1}
+  .expand-btn:hover{color:var(--ink)}
+  .zoom{position:fixed;inset:0;background:rgba(60,50,55,.6);display:none;
+    align-items:center;justify-content:center;padding:16px;z-index:60}
+  .zoom.open{display:flex}
+  .zoom .bingo{width:min(94vw,88vh);max-width:none;background:#fff}
+  .zoom .grid{grid-template-columns:repeat(5,1fr)}
+  .zoom .cell{font-size:clamp(11px,2.2vh,17px)}
+  .zoom .bingo .cap .title{font-size:clamp(28px,5vh,42px)}
+  .zoom-close{position:absolute;top:16px;right:18px;width:44px;height:44px;border-radius:50%;
+    background:#fff;border:none;cursor:pointer;font-size:20px;color:var(--ink);
+    display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+  @media (hover:none){ .expand-btn{display:none} }
+  .bingo{width:100%;max-width:500px;background:#fff;border-radius:16px;padding:clamp(12px,3.5vw,20px);
+    border:2px solid transparent}
+  .bingo.cut{border:2px dashed var(--t-border)}
+  .bingo .cap{text-align:center;margin-bottom:14px}
+  .bingo .cap .title{font-family:'Baloo 2';font-weight:800;font-size:clamp(22px,7vw,30px);
+    color:var(--t-border);letter-spacing:clamp(3px,1.5vw,5px);line-height:1}
+  .bingo .cap .sub{font-size:clamp(9px,2.4vw,11px);color:var(--ink-soft);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:clamp(4px,1.5vw,6px)}
+  .cell{aspect-ratio:1/1;border:1.5px solid var(--t-border);border-radius:9px;display:flex;
+    align-items:center;justify-content:center;text-align:center;padding:clamp(2px,1vw,4px);
+    min-width:0;overflow-wrap:anywhere;
+    font-weight:600;font-size:clamp(9px,2.9vw,11px);line-height:1.12;color:var(--ink);background:#FFFDFC}
+  .cell.free{background:var(--t-free-bg);color:var(--t-free-text);font-family:'Baloo 2';
+    font-weight:700;font-size:clamp(11px,3.4vw,15px);border-style:solid;border-color:var(--t-border)}
+  .howto{text-align:center;font-size:13.5px;color:var(--ink-soft);max-width:440px;margin:16px auto 0}
+  .howto b{color:var(--ink)}
+
+  @media (max-width:520px){
+    .toolbar{gap:12px 16px;padding:0 6px}
+    .panel h2,.panel .hint,.swatch-row{padding:0 6px}
+    .card-stage{margin:0 -2px}
+    .bingo{max-width:none;padding:9px;border-radius:12px}
+    .grid{gap:4px}
+    .cell{border-radius:7px}
+  }
+
+  #printArea{position:absolute;left:-99999px;top:0}
+  @media print{
+    .wrap{display:none !important}
+    #printArea{position:static;left:0}
+    .print-card{page-break-after:always;padding:22px;display:flex;justify-content:center}
+    .print-card:last-child{page-break-after:auto}
+    .print-card .bingo{max-width:640px}
+    .print-card .grid{grid-template-columns:repeat(5,1fr)}
+    .print-card .cell{font-size:13px}
+    .print-card.lg .cell{font-size:16px}
+    .cell,.cell.free{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="home-btn" href="/" aria-label="Home">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg>
+  </a>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/baby-shower-games/">Baby Shower Games</a> › <span class="crumb-current">Bingo</span></nav>
+</header>
+
+<div class="wrap" style="margin-top:-40px">
+  <div class="hero">
+    <h1>Free Printable Baby Shower Bingo</h1>
+    <div class="deco">BINGO</div>
+    <div class="deco-sub">Baby Shower Edition</div>
+    <p>Pick a color, then print unique cards so no two guests match. Instant PDF — no email, no signup.</p>
+    <div class="badges">
+      <span class="badge pink">✓ Instant PDF — no email</span>
+      <span class="badge">✓ Unique cards</span>
+      <span class="badge pink">✓ 4 colors</span>
+      <span class="badge">✓ Free for commercial use</span>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>1. Choose your color &amp; preview</h2>
+    <p class="hint">Pick a color, shuffle to see different squares, then download below.</p>
+
+    <div class="swatch-row" id="swatches">
+      <span class="swatch-label">Color:</span>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn ghost" id="reshuffle">↻ Shuffle squares</button>
+      <label class="toggle"><input type="checkbox" id="cutGuides" checked> Cutting guides (dashed border)</label>
+    </div>
+
+    <div class="stage-wrap">
+      <button class="expand-btn" id="expandBtn" aria-label="Expand card" title="Expand">⤢</button>
+      <div class="card-stage" id="stage"></div>
+    </div>
+    <p class="howto"><b>No caller needed.</b> Mark each square as gifts are opened or moments happen — first to 5 in a row wins!</p>
+  </section>
+
+  <section class="panel">
+    <h2>2. Download &amp; print</h2>
+    <p class="hint">Choose how many guests, then save as PDF.</p>
+    <div class="controls">
+      <div class="field">
+        <label for="count">Number of guests / cards</label>
+        <input type="number" id="count" min="1" max="60" value="8">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn primary" id="dlMany">Download unique cards (PDF)</button>
+      <button class="btn secondary" id="dlOne">Download just 1 card (PDF)</button>
+    </div>
+    <p class="foot-note">Every card is reshuffled — no two guests get the same one.</p>
+  </section>
+</div>
+
+<div class="zoom" id="zoom">
+  <button class="zoom-close" id="zoomClose" aria-label="Close">✕</button>
+  <div id="zoomCard"></div>
+</div>
+
+<div id="printArea"></div>
+
+<footer class="site-footer">
+  <nav class="more-games">
+    <h2>More games</h2>
+    <ul>
+      <li><a href="/baby-shower-games/">← All Baby Shower Games</a></li>
+      <li><a href="/baby-shower-games/word-scramble/">Word Scramble</a></li>
+      <li><a href="/baby-shower-games/word-search/">Word Search</a></li>
+      <li><a href="/baby-shower-games/how-well-do-you-know-mommy/">How Well Do You Know Mommy</a></li>
+      <li><a href="/baby-shower-games/emoji-pictionary/">Emoji Pictionary</a></li>
+      <li><a href="/baby-shower-games/trivia/">Trivia</a></li>
+    </ul>
+  </nav>
+  <nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="/baby-shower-games/">Baby Shower Games</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/about.html">About</a>
+  </nav>
+  <p class="license"><strong>License:</strong> free to print and use for personal parties, classrooms,
+    and paid/commercial events. Please don't resell the files themselves.</p>
+  <!-- ADSENSE SLOT -->
+  <div class="ad-slot"></div>
+  <p class="copyright">&copy; 2026 GamePrintery</p>
+</footer>
+
+<script>
+const THEMES = [
+  {id:"blush",   name:"Blush",       border:"#E79AA2", freeBg:"#F6D5D8", freeText:"#8a4a52"},
+  {id:"sage",    name:"Sage",        border:"#8FB49A", freeBg:"#CFE0D0", freeText:"#3f5a45"},
+  {id:"blue",    name:"Powder Blue", border:"#7FA0C8", freeBg:"#D6E2F0", freeText:"#3d5675"},
+  {id:"sunshine",name:"Sunshine",    border:"#D9A55A", freeBg:"#F5E4C3", freeText:"#7a5a24"}
+];
+
+const ITEMS = ["Baby bottle","Onesie","Pacifier","Rattle","Diapers","Stroller","Bib","Teddy bear",
+  "Booties","Baby blanket","Crib mobile","Baby socks","Mittens","Car seat","High chair","Baby powder",
+  "Wipes","Baby book","Bath toy","Nursing pillow","Baby monitor","Swaddle","Burp cloth","Teether",
+  "Headband","Baby shoes","Changing pad","Baby lotion"];
+const PREDICTIONS = ["Gift with no card","Dad looks nervous","Guesses baby's name","Nursing pillow gifted",
+  "Predicts due date","A toast is made","Someone says “aww”","Grandma cries",
+  "Bow saved for bouquet","Diapers opened","Cake is served","Belly gets touched",
+  "Game gets competitive","A phone rings","Baby name debated","Wrong gender guess",
+  "Everyone: “so tiny!”","Gift repeated","Clothes 0–3 mo","Applause"];
+const POOL = [...ITEMS, ...PREDICTIONS];
+
+function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+function makeCard(){
+  return shuffle(POOL).slice(0,25).map(t=>({text:t}));
+}
+function cardHTML(cells,t,cut){
+  const style=`--t-border:${t.border};--t-free-bg:${t.freeBg};--t-free-text:${t.freeText}`;
+  const g=cells.map(c=>`<div class="cell">${c.text}</div>`).join("");
+  return `<div class="bingo${cut?' cut':''}" style="${style}">
+    <div class="cap"><div class="title">B I N G O</div><div class="sub">Baby Shower Edition</div></div>
+    <div class="grid">${g}</div></div>`;
+}
+
+let selected = THEMES[0];
+let previewCells = makeCard();
+const stage=document.getElementById('stage');
+const swatches=document.getElementById('swatches');
+const cutEl=document.getElementById('cutGuides'), countEl=document.getElementById('count');
+
+function buildSwatches(){
+  THEMES.forEach(t=>{
+    const b=document.createElement('button');
+    b.className='swatch'; b.dataset.id=t.id;
+    b.style.background=t.border; b.style.setProperty('--sw',t.border);
+    b.setAttribute('aria-label',t.name);
+    b.onclick=()=>{ selected=t; renderPreview(); refreshSwatches(); };
+    swatches.appendChild(b);
+  });
+  refreshSwatches();
+}
+function refreshSwatches(){
+  document.querySelectorAll('.swatch').forEach(s=>s.classList.toggle('sel', s.dataset.id===selected.id));
+}
+function renderPreview(){
+  stage.innerHTML=cardHTML(previewCells,selected,cutEl.checked);
+}
+document.getElementById('reshuffle').onclick=()=>{ previewCells=makeCard(); renderPreview(); };
+cutEl.onchange=renderPreview;
+
+const zoom=document.getElementById('zoom'), zoomCard=document.getElementById('zoomCard');
+function openZoom(){ zoomCard.innerHTML=cardHTML(previewCells,selected,cutEl.checked); zoom.classList.add('open'); }
+function closeZoom(){ zoom.classList.remove('open'); }
+document.getElementById('expandBtn').onclick=openZoom;
+document.getElementById('zoomClose').onclick=closeZoom;
+zoom.addEventListener('click',e=>{ if(e.target===zoom) closeZoom(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeZoom(); });
+
+function printCards(n){
+  const area=document.getElementById('printArea'); let html="";
+  for(let i=0;i<n;i++){ html+=`<div class="print-card">${cardHTML(makeCard(),selected,cutEl.checked)}</div>`; }
+  area.innerHTML=html; setTimeout(()=>window.print(),60);
+}
+document.getElementById('dlOne').onclick=()=>printCards(1);
+document.getElementById('dlMany').onclick=()=>{ let n=parseInt(countEl.value,10); if(isNaN(n)||n<1)n=1; if(n>60)n=60; printCards(n); };
+
+buildSwatches(); renderPreview();
+</script>
+</body>
+</html>

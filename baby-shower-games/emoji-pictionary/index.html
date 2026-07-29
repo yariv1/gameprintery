@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Printable Baby Shower Emoji Pictionary Game</title>
+<meta name="description" content="Free printable baby shower emoji pictionary game. Guess the baby word from each emoji clue — instant PDF with answer key, no email, free for personal and commercial use.">
+<link rel="canonical" href="https://gameprintery.com/baby-shower-games/emoji-pictionary/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  :root{ --wsc:#E79AA2; }
+
+  /* Color swatches */
+  .swatch-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+  .swatch-row .swatch-label{font-weight:700;font-size:13px;margin-right:2px}
+  .swatch{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid #fff;
+    box-shadow:0 0 0 1.5px var(--line);position:relative;transition:.12s}
+  .swatch:hover{transform:scale(1.08)}
+  .swatch.sel{box-shadow:0 0 0 3px var(--sw)}
+  .swatch.sel::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;color:#fff;font-size:16px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .swatch:focus-visible{outline:3px solid #8FB49A;outline-offset:3px}
+
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px}
+  .toggle{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;cursor:pointer}
+  .toggle input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+
+  /* Puzzle checklist */
+  .question-list{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+  .q-row{display:flex;align-items:center;gap:12px;padding:8px 6px;border-radius:8px;cursor:pointer}
+  .q-row:hover{background:#FFF8F4}
+  .q-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex-shrink:0}
+  .q-emoji{font-size:20px;min-width:52px}
+  .q-answer-muted{flex:1;font-size:13.5px;color:var(--ink-soft)}
+  .q-remove{background:none;border:none;color:var(--ink-soft);cursor:pointer;font-size:15px;
+    padding:2px 8px;border-radius:6px;flex-shrink:0}
+  .q-remove:hover{color:#c0392b;background:#FBEAEA}
+
+  .add-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center}
+  .add-row input[type=text]{font:inherit;padding:9px 12px;border:1.5px solid var(--line);border-radius:11px}
+  .add-row input.add-emoji{width:90px}
+  .add-row input.add-answer{flex:1;min-width:160px}
+
+  .emoji-field{position:relative;display:inline-flex;align-items:center;gap:8px}
+  .emoji-pick-btn{white-space:nowrap}
+  .emoji-palette{position:absolute;top:calc(100% + 8px);left:0;z-index:40;background:#fff;
+    border:1.5px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+    box-sizing:border-box;width:320px;max-height:260px;overflow-y:auto;overflow-x:hidden;
+    padding:12px;display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+  .emoji-palette[hidden]{display:none}
+  .emoji-palette button{box-sizing:border-box;width:100%;min-width:0;background:none;border:none;
+    font-size:18px;line-height:1;padding:6px 0;border-radius:8px;cursor:pointer;overflow:hidden}
+  .emoji-palette button:hover{background:#FFF3F1}
+  .emoji-palette button:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
+
+  /* Word bank */
+  .word-bank-box{border:1.5px solid var(--wsc);border-radius:12px;padding:14px 16px;
+    margin:20px 0 16px;font-size:14px;color:var(--ink-soft);transition:border-color .15s}
+  .word-bank-box strong{font-family:'Baloo 2';color:var(--wsc);margin-right:6px}
+
+  /* Worksheet preview */
+  .worksheet{margin-top:4px}
+  .ws-row{display:flex;align-items:baseline;gap:12px;padding:9px 4px;border-bottom:1px dashed var(--line)}
+  .ws-num{font-weight:700;color:var(--wsc);width:24px;flex-shrink:0}
+  .ws-emoji{font-size:26px;min-width:70px}
+  .ws-blank{flex:1;border-bottom:1.5px solid var(--line);align-self:flex-end;height:1px;margin-left:10px}
+  .worksheet.lg .ws-emoji{font-size:34px}
+  .worksheet.lg .ws-num{font-size:18px}
+
+  @media (max-width:520px){
+    .toolbar{gap:12px 16px;padding:0 6px}
+    .panel h2,.panel .hint,.swatch-row{padding:0 6px}
+    .ws-emoji{min-width:52px;font-size:22px}
+  }
+
+  #printArea{position:absolute;left:-99999px;top:0}
+  @media print{
+    .wrap{display:none !important}
+    #printArea{position:static;left:0}
+    .print-page{padding:26px;page-break-after:always}
+    .print-page:last-child{page-break-after:auto}
+    .print-page h2{font-family:'Baloo 2';font-size:24px;text-align:center;margin:0 0 6px}
+    .guest-line{font-weight:700;display:flex;align-items:baseline;gap:8px;margin:14px 0 18px}
+    .guest-line .blank-line{flex:1;border-bottom:1px solid var(--ink);height:1px}
+    .print-wordbank{border:1.5px solid var(--wsc);border-radius:10px;padding:12px 14px;
+      margin:0 0 18px;font-size:13px}
+    .print-wordbank strong{color:var(--wsc);margin-right:6px}
+    .print-row{display:flex;align-items:baseline;gap:12px;padding:9px 4px;border-bottom:1px dashed var(--line);font-size:15px}
+    .print-row .n{font-weight:700;width:26px;color:var(--wsc)}
+    .print-row .emoji{font-size:20px;min-width:56px}
+    .print-row .blank{flex:1;border-bottom:1px solid var(--ink);height:1px;margin-left:12px}
+    .print-row.answer-row .answer{font-weight:700;color:var(--wsc)}
+    .print-row .n,.print-wordbank,.print-row.answer-row .answer{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .print-page.lg .print-row{font-size:18px}
+    .print-page.lg .print-row .n{width:30px;font-size:18px}
+    .print-page.lg .print-row .emoji{font-size:26px}
+    .print-page.lg h2{font-size:26px}
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="home-btn" href="/" aria-label="Home">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg>
+  </a>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/baby-shower-games/">Baby Shower Games</a> › <span class="crumb-current">Emoji Pictionary</span></nav>
+</header>
+
+<div class="wrap" style="margin-top:-40px">
+  <div class="hero">
+    <h1>Free Printable Baby Shower Emoji Pictionary</h1>
+    <div class="deco">EMOJI PICTIONARY</div>
+    <div class="deco-sub">Baby Shower Edition</div>
+    <p>A printable baby shower emoji pictionary game — guests decode each emoji clue into a baby word or phrase. Pick your puzzles or add your own, then print instant PDFs with an answer key. No email or signup.</p>
+    <div class="badges">
+      <span class="badge pink">✓ Instant PDF — no email</span>
+      <span class="badge">✓ Free for commercial use</span>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>1. Choose your puzzles</h2>
+    <p class="hint">All puzzles are checked by default — uncheck any you don't want, or add your own.</p>
+
+    <div class="question-list" id="questionList"></div>
+
+    <div class="add-row">
+      <div class="emoji-field">
+        <button type="button" class="btn secondary emoji-pick-btn" id="emojiPickBtn" aria-haspopup="true" aria-expanded="false">😊 Pick emoji</button>
+        <input type="text" class="add-emoji" id="newEmoji" placeholder="Emoji clue">
+        <div class="emoji-palette" id="emojiPalette" hidden></div>
+      </div>
+      <input type="text" class="add-answer" id="newAnswer" placeholder="Answer (e.g. baby bottle)">
+      <button type="button" class="btn secondary" id="addPuzzleBtn">Add</button>
+    </div>
+
+    <div class="word-bank-box" id="wordBank"></div>
+
+    <div class="worksheet" id="worksheet"></div>
+  </section>
+
+  <section class="panel">
+    <h2>2. Style</h2>
+    <p class="hint">Pick a color and text size for the printed sheets.</p>
+
+    <div class="swatch-row" id="swatches">
+      <span class="swatch-label">Color:</span>
+    </div>
+
+    <div class="toolbar">
+      <label class="toggle"><input type="checkbox" id="largePrint"> Large print</label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>3. Download &amp; print</h2>
+    <p class="hint">Get a guest sheet plus a matching answer key.</p>
+    <div class="btn-row">
+      <button class="btn primary" id="dlPdf">Download guest sheet + answer key (PDF)</button>
+    </div>
+    <p class="foot-note">Two pages: the guest sheet, then the answer key — matching your current puzzles.</p>
+  </section>
+</div>
+
+<div id="printArea"></div>
+
+<footer class="site-footer">
+  <nav class="more-games">
+    <h2>More games</h2>
+    <ul>
+      <li><a href="/baby-shower-games/">← All Baby Shower Games</a></li>
+      <li><a href="/baby-shower-games/bingo/">Bingo</a></li>
+      <li><a href="/baby-shower-games/word-scramble/">Word Scramble</a></li>
+      <li><a href="/baby-shower-games/word-search/">Word Search</a></li>
+      <li><a href="/baby-shower-games/how-well-do-you-know-mommy/">How Well Do You Know Mommy</a></li>
+      <li><a href="/baby-shower-games/trivia/">Trivia</a></li>
+    </ul>
+  </nav>
+  <nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="/baby-shower-games/">Baby Shower Games</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/about.html">About</a>
+  </nav>
+  <p class="license"><strong>License:</strong> free to print and use for personal parties, classrooms,
+    and paid/commercial events. Please don't resell the files themselves.</p>
+  <!-- ADSENSE SLOT -->
+  <div class="ad-slot"></div>
+  <p class="copyright">&copy; 2026 GamePrintery</p>
+</footer>
+
+<script>
+const PRESET_PUZZLES = [
+  ["🍼👶","baby bottle"],
+  ["🌧️👶","baby shower"],
+  ["🤰⏰","due date"],
+  ["🚼🚶","baby steps"],
+  ["👶💤","sleeping baby"],
+  ["🌙🎵","lullaby"],
+  ["👣👶","baby footprints"],
+  ["🍼🥛","bottle feeding"],
+  ["🧷👶","diaper pin"],
+  ["🐣","hatching"],
+  ["👶🛁","bath time"],
+  ["🤱","breastfeeding"],
+  ["🛏️👶","crib"],
+  ["🎀👧","it's a girl"],
+  ["💙👦","it's a boy"],
+  ["👶🚗","car seat"],
+  ["🍼😴","bedtime"],
+  ["🤰📸","baby bump"],
+  ["🧸🧡","teddy bear"],
+  ["👶👑","little prince/princess"]
+];
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function shuffleArr(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+
+let puzzles = PRESET_PUZZLES.map(([emoji,answer])=>({emoji, answer, checked:true, custom:false}));
+
+const THEMES = [
+  {id:"blush",   name:"Blush",       color:"#E79AA2"},
+  {id:"sage",    name:"Sage",        color:"#8FB49A"},
+  {id:"blue",    name:"Powder Blue", color:"#7FA0C8"},
+  {id:"sunshine",name:"Sunshine",    color:"#D9A55A"},
+  {id:"bw",      name:"B&W",         color:"#4B4650"}
+];
+let selectedTheme = THEMES[0];
+const swatches=document.getElementById('swatches');
+
+function buildSwatches(){
+  THEMES.forEach(t=>{
+    const b=document.createElement('button');
+    b.className='swatch'; b.dataset.id=t.id;
+    b.style.background=t.color; b.style.setProperty('--sw',t.color);
+    b.setAttribute('aria-label',t.name);
+    b.onclick=()=>{ selectedTheme=t; document.documentElement.style.setProperty('--wsc', t.color); refreshSwatches(); };
+    swatches.appendChild(b);
+  });
+  refreshSwatches();
+}
+function refreshSwatches(){
+  document.querySelectorAll('.swatch').forEach(s=>s.classList.toggle('sel', s.dataset.id===selectedTheme.id));
+}
+buildSwatches();
+document.documentElement.style.setProperty('--wsc', selectedTheme.color);
+
+function renderQuestionList(){
+  const el=document.getElementById('questionList');
+  el.innerHTML = puzzles.map((p,i)=>`
+    <label class="q-row">
+      <input type="checkbox" ${p.checked?'checked':''} data-i="${i}">
+      <span class="q-emoji">${escapeHtml(p.emoji)}</span>
+      <span class="q-answer-muted">${escapeHtml(p.answer)}</span>
+      ${p.custom?`<button type="button" class="q-remove" data-i="${i}" aria-label="Remove puzzle">✕</button>`:''}
+    </label>`).join('');
+  el.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.onchange=()=>{ puzzles[+cb.dataset.i].checked=cb.checked; renderWorksheet(); };
+  });
+  el.querySelectorAll('.q-remove').forEach(btn=>{
+    btn.onclick=()=>{ puzzles.splice(+btn.dataset.i,1); renderQuestionList(); renderWorksheet(); };
+  });
+}
+
+function renderWorksheet(){
+  const checked=puzzles.filter(p=>p.checked);
+
+  const bankEl=document.getElementById('wordBank');
+  const scrambledAnswers=shuffleArr(checked.map(p=>p.answer));
+  bankEl.innerHTML = `<strong>Word Bank:</strong>${escapeHtml(scrambledAnswers.join(', '))}`;
+
+  const el=document.getElementById('worksheet');
+  el.innerHTML = checked.map((p,i)=>`
+    <div class="ws-row">
+      <span class="ws-num">${i+1}.</span>
+      <span class="ws-emoji">${escapeHtml(p.emoji)}</span>
+      <span class="ws-blank"></span>
+    </div>`).join('');
+}
+
+const EMOJI_PALETTE = [
+  "🍼","👶","🤰","🤱","🚼","👣","🧷","🛏️","🛁","🧸","🎀","👑","🐣","🚗","💤","😴","🌙","⭐","🌟",
+  "😀","😃","😄","😁","😊","😍","🥰","😘","😂","🤣","😅","😉","😎","🤗","🤔","🥱","😭","😱","🥳","😇","🙃","😋","🤩",
+  "❤️","🧡","💛","💚","💙","💜","🤍","💕","💖","💗","💓","✨","🎉","🎈","🎁","❓","❗","➕","⏰","📸","🎵","🎶",
+  "🥛","🍰","🧁","🍭","🍫","🍓","🍎","🍌","🍕","🍔","☕","🍪","🍬",
+  "🐤","🐥","🦆","🐻","🐰","🐘","🦋","🌸","🌷","🌈","☔","🌧️",
+  "🚶","🏃","👧","👦","👩","👨","💩","💡","🔔","📖"
+];
+
+const newEmojiEl=document.getElementById('newEmoji');
+const newAnswerEl=document.getElementById('newAnswer');
+
+const emojiPickBtn=document.getElementById('emojiPickBtn');
+const emojiPalette=document.getElementById('emojiPalette');
+emojiPalette.innerHTML = EMOJI_PALETTE.map(e=>`<button type="button">${e}</button>`).join('');
+emojiPalette.querySelectorAll('button').forEach(btn=>{
+  btn.onclick=()=>{
+    newEmojiEl.value += btn.textContent;
+    newEmojiEl.focus();
+  };
+});
+function openEmojiPalette(){ emojiPalette.hidden=false; emojiPickBtn.setAttribute('aria-expanded','true'); }
+function closeEmojiPalette(){ emojiPalette.hidden=true; emojiPickBtn.setAttribute('aria-expanded','false'); }
+emojiPickBtn.onclick=(e)=>{
+  e.stopPropagation();
+  if(emojiPalette.hidden) openEmojiPalette(); else closeEmojiPalette();
+};
+document.addEventListener('click', e=>{
+  if(!emojiPalette.hidden && !emojiPalette.contains(e.target) && e.target!==emojiPickBtn){
+    closeEmojiPalette();
+  }
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeEmojiPalette(); });
+
+function addPuzzle(){
+  const emoji=newEmojiEl.value.trim();
+  const answer=newAnswerEl.value.trim();
+  if(!emoji || !answer) return;
+  puzzles.push({emoji, answer, checked:true, custom:true});
+  newEmojiEl.value='';
+  newAnswerEl.value='';
+  renderQuestionList();
+  renderWorksheet();
+}
+document.getElementById('addPuzzleBtn').onclick=addPuzzle;
+[newEmojiEl,newAnswerEl].forEach(el=>{
+  el.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); addPuzzle(); } });
+});
+
+const largePrintEl=document.getElementById('largePrint');
+largePrintEl.onchange=()=>{ document.getElementById('worksheet').classList.toggle('lg', largePrintEl.checked); };
+
+function printSheets(){
+  const area=document.getElementById('printArea');
+  const lgClass = largePrintEl.checked ? ' lg' : '';
+  const checked=puzzles.filter(p=>p.checked);
+  const scrambledAnswers=shuffleArr(checked.map(p=>p.answer));
+
+  const rows1=checked.map((p,i)=>`<div class="print-row"><span class="n">${i+1}.</span><span class="emoji">${escapeHtml(p.emoji)}</span><span class="blank"></span></div>`).join('');
+  const rows2=checked.map((p,i)=>`<div class="print-row answer-row"><span class="n">${i+1}.</span><span class="emoji">${escapeHtml(p.emoji)}</span><span class="answer">${escapeHtml(p.answer)}</span></div>`).join('');
+
+  area.innerHTML=`
+    <div class="print-page${lgClass}">
+      <h2>Baby Shower Emoji Pictionary</h2>
+      <div class="guest-line">Guest name: <span class="blank-line"></span></div>
+      <div class="print-wordbank"><strong>Word Bank:</strong>${escapeHtml(scrambledAnswers.join(', '))}</div>
+      ${rows1}
+    </div>
+    <div class="print-page${lgClass}">
+      <h2>Answer Key</h2>
+      ${rows2}
+    </div>`;
+  setTimeout(()=>window.print(),60);
+}
+document.getElementById('dlPdf').onclick=printSheets;
+
+renderQuestionList();
+renderWorksheet();
+</script>
+</body>
+</html>

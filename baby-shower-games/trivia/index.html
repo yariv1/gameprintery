@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Printable Baby Shower Trivia Game</title>
+<meta name="description" content="Free printable baby shower trivia game. Choose open-ended or multiple choice, pick your questions or add your own — instant PDF with answer key, no email, free for personal and commercial use.">
+<link rel="canonical" href="https://gameprintery.com/baby-shower-games/trivia/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  :root{ --wsc:#E79AA2; }
+
+  /* Color swatches */
+  .swatch-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+  .swatch-row .swatch-label{font-weight:700;font-size:13px;margin-right:2px}
+  .swatch{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid #fff;
+    box-shadow:0 0 0 1.5px var(--line);position:relative;transition:.12s}
+  .swatch:hover{transform:scale(1.08)}
+  .swatch.sel{box-shadow:0 0 0 3px var(--sw)}
+  .swatch.sel::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;color:#fff;font-size:16px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .swatch:focus-visible{outline:3px solid #8FB49A;outline-offset:3px}
+
+  /* Segmented control (format) */
+  .seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{font-family:'Baloo 2';font-weight:700;font-size:13.5px;border:none;background:#fff;
+    color:var(--ink-soft);padding:8px 14px;cursor:pointer;transition:.12s}
+  .seg button+button{border-left:1px solid var(--line)}
+  .seg button.sel{background:var(--accent);color:#fff}
+  .seg button:hover:not(.sel){background:#FFF3F1}
+  .seg button:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
+  .seg-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .seg-group .swatch-label{display:inline-block;min-width:84px}
+  .control-rows{display:flex;flex-direction:column;gap:12px}
+
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;margin-top:12px}
+  .toggle{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;cursor:pointer}
+  .toggle input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+
+  /* Question checklist — doubles as the live worksheet preview */
+  .question-list{display:flex;flex-direction:column;gap:2px;margin-top:16px}
+  .q-row{display:flex;align-items:flex-start;gap:12px;padding:10px 6px;border-radius:8px;
+    border-bottom:1px dashed var(--line)}
+  .q-row:last-child{border-bottom:none}
+  .q-row.unchecked{opacity:.55}
+  .q-check{display:flex;align-items:center;padding-top:2px;flex-shrink:0}
+  .q-check input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+  .q-row.unchecked .q-text{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .q-body{flex:1;min-width:0}
+  .q-headline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .q-headline .q-text{font-weight:600;color:var(--ink);font-size:14.5px}
+  .q-answer-muted{font-size:12px;color:var(--ink-soft);margin-left:auto;white-space:nowrap}
+  .ws-num{font-weight:700;color:var(--wsc);flex-shrink:0}
+  .ws-blank{display:block;border-bottom:1.5px solid var(--line);height:1px;margin-top:10px;max-width:360px}
+  .ws-options{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 16px;margin-top:8px}
+  .ws-opt{font-size:13.5px;color:var(--ink-soft)}
+  .q-remove{background:none;border:none;color:var(--ink-soft);cursor:pointer;font-size:15px;
+    padding:2px 8px;border-radius:6px;flex-shrink:0}
+  .q-remove:hover{color:#c0392b;background:#FBEAEA}
+
+  .question-list.lg .q-text{font-size:17px}
+  .question-list.lg .ws-num{font-size:18px}
+  .question-list.lg .ws-opt{font-size:15px}
+
+  .add-form{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+  .add-form-row{display:flex;gap:10px;flex-wrap:wrap}
+  .add-form input[type=text]{flex:1;min-width:150px;font:inherit;padding:9px 12px;
+    border:1.5px solid var(--line);border-radius:11px}
+  .add-form .btn{align-self:flex-start}
+
+  @media (max-width:520px){
+    .toolbar{gap:12px 16px;padding:0 6px}
+    .panel h2,.panel .hint,.swatch-row,.seg-group{padding:0 6px}
+    .q-answer-muted{margin-left:0}
+  }
+
+  #printArea{position:absolute;left:-99999px;top:0}
+  @media print{
+    .wrap{display:none !important}
+    #printArea{position:static;left:0}
+    .print-page{padding:26px;page-break-after:always}
+    .print-page:last-child{page-break-after:auto}
+    .print-page h2{font-family:'Baloo 2';font-size:24px;text-align:center;margin:0 0 6px}
+    .guest-line{font-weight:700;display:flex;align-items:baseline;gap:8px;margin:14px 0 18px}
+    .guest-line .blank-line{flex:1;border-bottom:1px solid var(--ink);height:1px}
+    .print-row{padding:10px 4px;border-bottom:1px dashed var(--line);font-size:14.5px}
+    .print-row .pq{display:flex;align-items:baseline;gap:10px}
+    .print-row .n{font-weight:700;width:24px;flex-shrink:0;color:var(--wsc)}
+    .print-row .q{flex:1}
+    .print-row .blank{display:block;border-bottom:1px solid var(--ink);height:1px;margin-top:8px;margin-left:34px}
+    .print-row .popts{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 14px;
+      margin-top:6px;margin-left:34px;font-size:13px}
+    .print-row.answer-row{display:flex;align-items:baseline;gap:10px}
+    .print-row.answer-row .answer{font-weight:700;color:var(--wsc)}
+    .print-row .n,.print-row.answer-row .answer{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .print-page.lg .print-row{font-size:17px}
+    .print-page.lg .print-row .n{width:28px;font-size:18px}
+    .print-page.lg h2{font-size:26px}
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="home-btn" href="/" aria-label="Home">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg>
+  </a>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/baby-shower-games/">Baby Shower Games</a> › <span class="crumb-current">Trivia</span></nav>
+</header>
+
+<div class="wrap" style="margin-top:-40px">
+  <div class="hero">
+    <h1>Free Printable Baby Shower Trivia</h1>
+    <div class="deco">TRIVIA</div>
+    <div class="deco-sub">Baby Shower Edition</div>
+    <p>A printable baby shower trivia game about babies and pregnancy — choose open-ended or multiple choice, pick your questions or add your own, then print instant PDFs with an answer key. No email or signup.</p>
+    <div class="badges">
+      <span class="badge pink">✓ Instant PDF — no email</span>
+      <span class="badge">✓ Free for commercial use</span>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>1. Choose your questions</h2>
+    <p class="hint">Pick a format, then check the questions you want — the list below is your live worksheet preview.</p>
+
+    <div class="swatch-row" id="swatches">
+      <span class="swatch-label">Color:</span>
+    </div>
+
+    <div class="control-rows">
+      <div class="seg-group">
+        <span class="swatch-label">Format:</span>
+        <div class="seg" id="formatSeg">
+          <button type="button" data-val="open" class="sel">Open-ended</button>
+          <button type="button" data-val="mc">Multiple choice</button>
+          <button type="button" data-val="both">Both</button>
+        </div>
+      </div>
+      <div class="seg-group">
+        <span class="swatch-label">Questions:</span>
+        <div class="seg" id="countSeg">
+          <button type="button" data-val="10">10</button>
+          <button type="button" data-val="15">15</button>
+          <button type="button" data-val="20" class="sel">20</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button type="button" class="btn ghost" id="shuffleBtn">↻ Shuffle</button>
+      <label class="toggle"><input type="checkbox" id="largePrint"> Large print</label>
+    </div>
+
+    <div class="question-list" id="questionList"></div>
+
+    <div class="add-form">
+      <div class="add-form-row">
+        <input type="text" id="newQ" placeholder="Question">
+        <input type="text" id="newCorrect" placeholder="Correct answer">
+      </div>
+      <div class="add-form-row">
+        <input type="text" id="newWrong1" placeholder="Wrong option 1 (optional)">
+        <input type="text" id="newWrong2" placeholder="Wrong option 2 (optional)">
+        <input type="text" id="newWrong3" placeholder="Wrong option 3 (optional)">
+      </div>
+      <button type="button" class="btn secondary" id="addQuestionBtn">Add</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>2. Download &amp; print</h2>
+    <p class="hint">Get a guest sheet plus a matching answer key.</p>
+    <div class="btn-row">
+      <button class="btn primary" id="dlPdf">Download guest sheet + answer key (PDF)</button>
+    </div>
+    <p class="foot-note">Two pages: the guest sheet, then the answer key — matching your current questions.</p>
+  </section>
+</div>
+
+<div id="printArea"></div>
+
+<footer class="site-footer">
+  <nav class="more-games">
+    <h2>More games</h2>
+    <ul>
+      <li><a href="/baby-shower-games/">← All Baby Shower Games</a></li>
+      <li><a href="/baby-shower-games/bingo/">Bingo</a></li>
+      <li><a href="/baby-shower-games/word-scramble/">Word Scramble</a></li>
+      <li><a href="/baby-shower-games/word-search/">Word Search</a></li>
+      <li><a href="/baby-shower-games/how-well-do-you-know-mommy/">How Well Do You Know Mommy</a></li>
+      <li><a href="/baby-shower-games/emoji-pictionary/">Emoji Pictionary</a></li>
+    </ul>
+  </nav>
+  <nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="/baby-shower-games/">Baby Shower Games</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/about.html">About</a>
+  </nav>
+  <p class="license"><strong>License:</strong> free to print and use for personal parties, classrooms,
+    and paid/commercial events. Please don't resell the files themselves.</p>
+  <!-- ADSENSE SLOT -->
+  <div class="ad-slot"></div>
+  <p class="copyright">&copy; 2026 GamePrintery</p>
+</footer>
+
+<script>
+const PRESET_QUESTIONS = [
+  {q:"How many months is a full-term pregnancy?", correct:"9", wrongs:["8","10","7"]},
+  {q:"How many bones is a baby born with?", correct:"300", wrongs:["206","250","150"]},
+  {q:"What is a baby's first stool called?", correct:"Meconium", wrongs:["Colostrum","Vernix","Lanugo"]},
+  {q:"What is the average weight of a newborn (lbs)?", correct:"7.5", wrongs:["5","10","12"]},
+  {q:"At what age do babies usually start crawling (months)?", correct:"7-10", wrongs:["2-3","12-14","15-18"]},
+  {q:"What is the soft spot on a baby's head called?", correct:"Fontanelle", wrongs:["Cranium","Sinus","Temple"]},
+  {q:"How many teeth does a baby have at birth?", correct:"0", wrongs:["4","8","20"]},
+  {q:"What is the fine hair on a newborn's body called?", correct:"Lanugo", wrongs:["Vernix","Meconium","Fuzz"]},
+  {q:"What sense is most developed at birth?", correct:"Hearing", wrongs:["Sight","Taste","Smell"]},
+  {q:"How many diapers does a newborn use per day on average?", correct:"10-12", wrongs:["2-3","5-6","15-18"]},
+  {q:"What is the medical term for a baby's first year?", correct:"Infancy", wrongs:["Toddlerhood","Neonatal","Prenatal"]},
+  {q:"Babies are born without which of these?", correct:"Kneecaps", wrongs:["Eyelashes","Fingernails","Hair"]},
+  {q:"What color are most Caucasian babies' eyes at birth?", correct:"Blue/grey", wrongs:["Brown","Green","Black"]},
+  {q:"How much does a baby's brain grow in the first year?", correct:"Doubles", wrongs:["Triples","Stays same","Quadruples"]},
+  {q:"What is the first milk a mother produces called?", correct:"Colostrum", wrongs:["Formula","Whey","Meconium"]},
+  {q:"On average, how many words does a 1-year-old say?", correct:"1-3", wrongs:["10-15","20-30","0"]},
+  {q:"What is the average length of a newborn (inches)?", correct:"20", wrongs:["14","26","30"]},
+  {q:"How many hours a day do newborns typically sleep?", correct:"16-17", wrongs:["8-9","12-13","20-22"]},
+  {q:"When do babies typically get their first tooth (months)?", correct:"6", wrongs:["2","12","18"]},
+  {q:"What is the study of babies' development called?", correct:"Pediatrics", wrongs:["Geriatrics","Cardiology","Neurology"]}
+];
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function shuffleArr(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+
+let questions = PRESET_QUESTIONS.map(p=>({q:p.q, correct:p.correct, wrongs:[...p.wrongs], checked:true, custom:false}));
+let format = 'open';
+let count = 20;
+let currentSet = [];
+
+const THEMES = [
+  {id:"blush",   name:"Blush",       color:"#E79AA2"},
+  {id:"sage",    name:"Sage",        color:"#8FB49A"},
+  {id:"blue",    name:"Powder Blue", color:"#7FA0C8"},
+  {id:"sunshine",name:"Sunshine",    color:"#D9A55A"},
+  {id:"bw",      name:"B&W",         color:"#4B4650"}
+];
+let selectedTheme = THEMES[0];
+const swatches=document.getElementById('swatches');
+
+function buildSwatches(){
+  THEMES.forEach(t=>{
+    const b=document.createElement('button');
+    b.className='swatch'; b.dataset.id=t.id;
+    b.style.background=t.color; b.style.setProperty('--sw',t.color);
+    b.setAttribute('aria-label',t.name);
+    b.onclick=()=>{ selectedTheme=t; document.documentElement.style.setProperty('--wsc', t.color); refreshSwatches(); };
+    swatches.appendChild(b);
+  });
+  refreshSwatches();
+}
+function refreshSwatches(){
+  document.querySelectorAll('.swatch').forEach(s=>s.classList.toggle('sel', s.dataset.id===selectedTheme.id));
+}
+buildSwatches();
+document.documentElement.style.setProperty('--wsc', selectedTheme.color);
+
+function setupSeg(id,onSelect){
+  const el=document.getElementById(id);
+  el.querySelectorAll('button').forEach(b=>{
+    b.onclick=()=>{
+      el.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      onSelect(b.dataset.val);
+    };
+  });
+}
+setupSeg('formatSeg', v=>{ format=v; buildCurrentSet(); renderQuestionList(); });
+setupSeg('countSeg', v=>{ count=parseInt(v,10); selectRandomQuestions(); buildCurrentSet(); renderQuestionList(); });
+
+// Custom questions are always kept; the remainder of `count` is filled with a
+// random subset of the 20 presets. If there are more customs than `count`, every
+// custom is still kept (the total can then exceed `count` — customs are never dropped).
+function selectRandomQuestions(){
+  const customs = questions.filter(qq=>qq.custom);
+  const presets = questions.filter(qq=>!qq.custom);
+  questions.forEach(qq=>{ qq.checked=false; });
+  customs.forEach(qq=>{ qq.checked=true; });
+  const remaining = Math.max(0, count - customs.length);
+  shuffleArr(presets).slice(0, remaining).forEach(qq=>{ qq.checked=true; });
+}
+document.getElementById('shuffleBtn').onclick=()=>{
+  selectRandomQuestions();
+  buildCurrentSet();
+  renderQuestionList();
+};
+
+// Renders the question checklist AND doubles as the live worksheet preview: each
+// checked row shows its numbered, current-format preview (blank line or a/b/c/d
+// options) pulled straight from currentSet, so it's always what will actually
+// print. Unchecked rows stay collapsed — just the checkbox and question text.
+function renderQuestionList(){
+  const el=document.getElementById('questionList');
+  let checkedIdx=0;
+  el.innerHTML = questions.map((qq,i)=>{
+    if(!qq.checked){
+      return `<div class="q-row unchecked">
+        <label class="q-check"><input type="checkbox" data-i="${i}"></label>
+        <span class="q-text">${escapeHtml(qq.q)}</span>
+        ${qq.custom?`<button type="button" class="q-remove" data-i="${i}" aria-label="Remove question">✕</button>`:''}
+      </div>`;
+    }
+    const item=currentSet[checkedIdx];
+    checkedIdx++;
+    const previewHtml = item.mode==='mc'
+      ? `<div class="ws-options">${item.options.map(o=>`<span class="ws-opt">${o.letter}) ${escapeHtml(o.text)}</span>`).join('')}</div>`
+      : `<span class="ws-blank"></span>`;
+    return `<div class="q-row checked">
+      <label class="q-check"><input type="checkbox" checked data-i="${i}"></label>
+      <div class="q-body">
+        <div class="q-headline">
+          <span class="ws-num">${checkedIdx}.</span>
+          <span class="q-text">${escapeHtml(qq.q)}</span>
+          <span class="q-answer-muted">Correct: ${escapeHtml(qq.correct)}</span>
+        </div>
+        ${previewHtml}
+      </div>
+      ${qq.custom?`<button type="button" class="q-remove" data-i="${i}" aria-label="Remove question">✕</button>`:''}
+    </div>`;
+  }).join('');
+  el.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.onchange=()=>{ questions[+cb.dataset.i].checked=cb.checked; buildCurrentSet(); renderQuestionList(); };
+  });
+  el.querySelectorAll('.q-remove').forEach(btn=>{
+    btn.onclick=()=>{ questions.splice(+btn.dataset.i,1); buildCurrentSet(); renderQuestionList(); };
+  });
+}
+
+// True only if a question has exactly 3 usable (non-blank) wrong options — the
+// minimum needed to build a valid 4-choice multiple-choice question.
+function canMc(qq){
+  return qq.wrongs.filter(w=>w && w.trim()).length===3;
+}
+
+// Computed once per settings change and reused for BOTH the on-screen preview and
+// the PDF, so the shuffled multiple-choice letters — and, in Both mode, the
+// odd/even open-ended vs. multiple-choice split — always match exactly what
+// guests see. Never recomputed independently for print.
+function buildCurrentSet(){
+  const checked = questions.filter(qq=>qq.checked);
+  currentSet = checked.map((qq,idx)=>{
+    const position = idx+1; // 1-based position in the current numbered list
+    let mode;
+    if(format==='open'){
+      mode='open';
+    } else if(format==='mc'){
+      mode = canMc(qq) ? 'mc' : 'open';
+    } else { // both: odd positions open-ended, even positions multiple choice
+      mode = (position%2===0 && canMc(qq)) ? 'mc' : 'open';
+    }
+    if(mode==='mc'){
+      const validWrongs = qq.wrongs.filter(w=>w && w.trim());
+      const shuffledOpts = shuffleArr([
+        {text:qq.correct, correct:true},
+        ...validWrongs.map(w=>({text:w, correct:false}))
+      ]);
+      const letters=['a','b','c','d'];
+      const options = shuffledOpts.map((o,i)=>({letter:letters[i], text:o.text, correct:o.correct}));
+      return {q:qq.q, mode:'mc', options};
+    }
+    return {q:qq.q, mode:'open', correct:qq.correct};
+  });
+}
+
+const newQEl=document.getElementById('newQ');
+const newCorrectEl=document.getElementById('newCorrect');
+const newWrong1El=document.getElementById('newWrong1');
+const newWrong2El=document.getElementById('newWrong2');
+const newWrong3El=document.getElementById('newWrong3');
+
+function addQuestion(){
+  const q=newQEl.value.trim();
+  const correct=newCorrectEl.value.trim();
+  if(!q || !correct) return;
+  const wrongs=[newWrong1El.value.trim(), newWrong2El.value.trim(), newWrong3El.value.trim()].filter(w=>w);
+  questions.push({q, correct, wrongs, checked:true, custom:true});
+  newQEl.value=''; newCorrectEl.value=''; newWrong1El.value=''; newWrong2El.value=''; newWrong3El.value='';
+  buildCurrentSet();
+  renderQuestionList();
+}
+document.getElementById('addQuestionBtn').onclick=addQuestion;
+[newQEl,newCorrectEl,newWrong1El,newWrong2El,newWrong3El].forEach(el=>{
+  el.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); addQuestion(); } });
+});
+
+const largePrintEl=document.getElementById('largePrint');
+largePrintEl.onchange=()=>{ document.getElementById('questionList').classList.toggle('lg', largePrintEl.checked); };
+
+function printSheets(){
+  const area=document.getElementById('printArea');
+  const lgClass = largePrintEl.checked ? ' lg' : '';
+
+  const rows1 = currentSet.map((item,i)=>{
+    if(item.mode==='mc'){
+      const opts=item.options.map(o=>`<span>${o.letter}) ${escapeHtml(o.text)}</span>`).join('');
+      return `<div class="print-row mc"><div class="pq"><span class="n">${i+1}.</span><span class="q">${escapeHtml(item.q)}</span></div><div class="popts">${opts}</div></div>`;
+    }
+    return `<div class="print-row"><div class="pq"><span class="n">${i+1}.</span><span class="q">${escapeHtml(item.q)}</span></div><span class="blank"></span></div>`;
+  }).join('');
+
+  const rows2 = currentSet.map((item,i)=>{
+    const ans = item.mode==='mc'
+      ? `${item.options.find(o=>o.correct).letter}) ${item.options.find(o=>o.correct).text}`
+      : item.correct;
+    return `<div class="print-row answer-row"><span class="n">${i+1}.</span><span class="q">${escapeHtml(item.q)}</span><span class="answer">${escapeHtml(ans)}</span></div>`;
+  }).join('');
+
+  area.innerHTML=`
+    <div class="print-page${lgClass}">
+      <h2>Baby Shower Trivia</h2>
+      <div class="guest-line">Guest name: <span class="blank-line"></span></div>
+      ${rows1}
+    </div>
+    <div class="print-page${lgClass}">
+      <h2>Answer Key</h2>
+      ${rows2}
+    </div>`;
+  setTimeout(()=>window.print(),60);
+}
+document.getElementById('dlPdf').onclick=printSheets;
+
+buildCurrentSet();
+renderQuestionList();
+</script>
+</body>
+</html>
