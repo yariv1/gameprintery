@@ -5,33 +5,72 @@
   --card:#FFFFFF; --line:#EFE2E1; --radius:18px;
   --shadow:0 10px 30px rgba(150,110,120,.12);
   --accent:#E79AA2;
+
+  /* themeable per-category — baby defaults (must not change baby's look) */
+  --bg-base:var(--cream);
+  --bg-glow-1:#FCE7E9;
+  --bg-glow-2:#E4F0E6;
+  --heading:var(--ink);
+  --focus:#8FB49A;
+  --dot:#8FB49A;
+  --badge-bg:#CFE0D0;
+  --badge-ink:#3f5a45;
+  --badge-pink-bg:#F6D5D8;
+  --badge-pink-ink:#8a4a52;
+  --accent-shadow:rgba(231,154,162,.4);
+  --deco-1:#E79AA2;
+  --deco-2:#C99BC4;
+  --deco-3:#8FB49A;
+  --gold:#c9a35b;
 }
+
+/* ===== BRIDAL SHOWER theme (blush + gold) ===== */
+[data-theme="bridal"]{
+  --bg-base:#FBF1F3;
+  --bg-glow-1:#F6DCE4;
+  --bg-glow-2:#F3E3D2;
+  --accent:#B06886;
+  --accent-shadow:rgba(176,104,134,.38);
+  --heading:#7A3350;
+  --focus:#B06886;
+  --dot:#C9A35B;
+  --line:#EBD9DD;
+  --badge-bg:#F0E2C6;
+  --badge-ink:#7A5A22;
+  --badge-pink-bg:#F3D9E1;
+  --badge-pink-ink:#8A4A63;
+  --deco-1:#B06886;
+  --deco-2:#C99BC4;
+  --deco-3:#C9A35B;
+  --gold:#C9A35B;
+}
+
 *{box-sizing:border-box}
 body{margin:0;font-family:'Nunito',sans-serif;color:var(--ink);line-height:1.55;
-  background:radial-gradient(circle at 12% 8%,#FCE7E9 0,transparent 40%),
-    radial-gradient(circle at 88% 4%,#E4F0E6 0,transparent 38%),var(--cream);}
+  background:radial-gradient(circle at 12% 8%,var(--bg-glow-1) 0,transparent 40%),
+    radial-gradient(circle at 88% 4%,var(--bg-glow-2) 0,transparent 38%),var(--bg-base);}
 .wrap{max-width:820px;margin:0 auto;padding:28px 20px 90px}
 .brand{display:flex;align-items:center;gap:9px;font-family:'Baloo 2';font-weight:700;
   font-size:20px;color:var(--accent);text-decoration:none}
-.brand .dot{width:11px;height:11px;border-radius:50%;background:#8FB49A;display:inline-block}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:var(--dot);display:inline-block}
 
 .hero{text-align:center;margin:26px 0 6px}
 .deco{font-family:'Baloo 2';font-weight:800;font-size:clamp(46px,10vw,78px);
   letter-spacing:clamp(6px,2vw,16px);line-height:1;
-  background:linear-gradient(90deg,#E79AA2,#C99BC4,#8FB49A);
+  background:linear-gradient(90deg,var(--deco-1),var(--deco-2),var(--deco-3));
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .deco-sub{font-family:'Baloo 2';font-weight:600;letter-spacing:4px;text-transform:uppercase;
   font-size:14px;color:var(--ink-soft);margin-top:2px}
 h1{font-family:'Baloo 2';font-weight:700;font-size:clamp(20px,3vw,26px);
-  margin:14px 0 8px;color:var(--ink)}
+  margin:14px 0 8px;color:var(--heading)}
 .hero p{font-size:16.5px;color:var(--ink-soft);max-width:600px;margin:0 auto 14px}
 .badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.badge{background:#CFE0D0;color:#3f5a45;font-weight:700;font-size:12.5px;padding:5px 12px;border-radius:999px}
-.badge.pink{background:#F6D5D8;color:#8a4a52}
+.badge{background:var(--badge-bg);color:var(--badge-ink);font-weight:700;font-size:12.5px;padding:5px 12px;border-radius:999px}
+.badge.pink{background:var(--badge-pink-bg);color:var(--badge-pink-ink)}
 
 .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
   box-shadow:var(--shadow);padding:24px;margin:24px 0}
-.panel h2{font-family:'Baloo 2';font-size:21px;margin:0 0 4px}
+.panel h2{font-family:'Baloo 2';font-size:21px;margin:0 0 4px;color:var(--heading)}
 .panel .hint{font-size:14px;color:var(--ink-soft);margin:0 0 18px}
 
 .controls{display:flex;flex-wrap:wrap;gap:20px 28px;align-items:flex-end}
@@ -42,8 +81,8 @@ h1{font-family:'Baloo 2';font-weight:700;font-size:clamp(20px,3vw,26px);
 button.btn{font-family:'Baloo 2';font-weight:600;font-size:15.5px;cursor:pointer;border:none;
   border-radius:12px;padding:13px 22px;transition:.15s}
 button.btn:hover{transform:translateY(-1px)}
-button.btn:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
-.btn.primary{background:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(231,154,162,.4)}
+button.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 6px 16px var(--accent-shadow)}
 .btn.secondary{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
 .btn.ghost{background:transparent;color:var(--accent);border:none;font-family:'Baloo 2';
   font-weight:600;font-size:14.5px;cursor:pointer;padding:6px 4px}
@@ -57,7 +96,7 @@ button.btn:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
   border-radius:12px;background:var(--card);border:1px solid var(--line);color:#979598;
   box-shadow:var(--shadow);transition:.15s;flex-shrink:0}
 .home-btn:hover{color:#7F7D82;transform:translateY(-1px)}
-.home-btn:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
+.home-btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .home-btn svg{width:28px;height:28px;display:block}
 .breadcrumb{font-size:13.5px;color:var(--ink-soft)}
 .breadcrumb a{color:var(--ink-soft);text-decoration:none}
@@ -66,7 +105,7 @@ button.btn:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
 
 .site-footer{max-width:820px;margin:40px auto 0;padding:0 20px 40px}
 .more-games{border-top:1px solid var(--line);padding-top:24px;margin-top:8px}
-.more-games h2{font-family:'Baloo 2';font-size:17px;margin:0 0 12px;text-align:center}
+.more-games h2{font-family:'Baloo 2';font-size:17px;margin:0 0 12px;text-align:center;color:var(--heading)}
 .more-games ul{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;
   gap:10px;margin:0 0 24px;padding:0}
 .more-games a{display:inline-block;background:var(--card);border:1px solid var(--line);
@@ -91,7 +130,7 @@ button.btn:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
   align-items:center;justify-content:center;text-align:center;gap:8px;padding:10px;
   text-decoration:none;color:var(--ink);transition:.15s}
 .game-cube:hover{transform:translateY(-3px);border-color:var(--accent)}
-.game-cube:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
+.game-cube:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .game-cube .emoji{font-size:clamp(30px,7vw,42px);line-height:1}
 .game-cube .name{font-family:'Baloo 2';font-weight:700;font-size:clamp(11px,2.4vw,15px);
   line-height:1.2;overflow-wrap:anywhere}
@@ -112,3 +151,7 @@ button.btn:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
   body{background:#fff}
   .site-header,.site-footer{display:none !important}
 }
+
+.home-logo{display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0}
+.home-logo img{height:40px;width:auto;display:block}
+.home-logo:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
