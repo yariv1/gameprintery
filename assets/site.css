@@ -155,3 +155,10 @@ button.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .home-logo{display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0}
 .home-logo img{height:40px;width:auto;display:block}
 .home-logo:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+.cat-tabs{display:flex;gap:20px;align-items:baseline;flex-wrap:wrap;margin:0 0 20px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.cat-tab{font-family:'Baloo 2';font-weight:700;font-size:19px;line-height:1.2;color:#9AA0AA;text-decoration:none}
+.cat-tab:hover{color:var(--heading)}
+.cat-tab.active{color:var(--heading)}
+.cat-tab:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+@media (max-width:520px){.cat-tabs{gap:14px}.cat-tab{font-size:16px}}

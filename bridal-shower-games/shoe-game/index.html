@@ -11,9 +11,9 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Printable How Well Do You Know Mommy?</title>
-<meta name="description" content="Free printable &quot;How Well Do You Know Mommy?&quot; baby shower game. Pick your questions or add your own, instant PDF, no email — free for personal and commercial use.">
-<link rel="canonical" href="https://gameprintery.com/baby-shower-games/how-well-do-you-know-mommy/">
+<title>Free Printable Bridal Shower Shoe Game</title>
+<meta name="description" content="Free printable bridal shower shoe game. The classic couple's &quot;who is more likely to…&quot; game — instant PDF host sheet, no email, free for personal and commercial use.">
+<link rel="canonical" href="https://gameprintery.com/bridal-shower-games/shoe-game/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -37,6 +37,23 @@
   .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px}
   .toggle{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;cursor:pointer}
   .toggle input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+
+  .seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{font-family:'Baloo 2';font-weight:700;font-size:13.5px;border:none;background:#fff;
+    color:var(--ink-soft);padding:8px 14px;cursor:pointer;transition:.12s}
+  .seg button+button{border-left:1px solid var(--line)}
+  .seg button.sel{background:var(--accent);color:#fff}
+  .seg button:hover:not(.sel){background:#FFF3F1}
+  .seg button:focus-visible{outline:3px solid #8FB49A;outline-offset:2px}
+  .seg-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .seg-group .swatch-label{display:inline-block;min-width:84px}
+  .control-rows{display:flex;flex-direction:column;gap:12px}
+  .howto{border:1.5px solid var(--wsc);border-radius:12px;padding:14px 16px;margin-bottom:18px;
+    font-size:14px;color:var(--ink-soft);line-height:1.5}
+  .howto strong{font-family:'Baloo 2';color:var(--wsc)}
+  .q-row.unkept{opacity:.5}
+  .question-list.lg .q-text{font-size:17px}
+  .question-list.lg .ws-num{font-size:18px}
 
   /* Question checklist */
   .question-list{display:flex;flex-direction:column;gap:2px;margin-top:4px}
@@ -74,6 +91,8 @@
     .print-page{padding:26px;page-break-after:always}
     .print-page:last-child{page-break-after:auto}
     .print-page h2{font-family:'Baloo 2';font-size:24px;text-align:center;margin:0 0 6px}
+    .print-howto{border:1.5px solid var(--wsc);border-radius:10px;padding:12px 14px;margin:0 0 18px;font-size:13px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .print-howto strong{color:var(--wsc);margin-right:6px}
     .print-page .sub{text-align:center;color:var(--ink-soft);font-size:13px;margin:0 0 18px}
     .guest-line{font-weight:700;display:flex;align-items:baseline;gap:8px;margin:0 0 20px}
     .guest-line .blank-line{flex:1;border-bottom:1px solid var(--ink);height:1px}
@@ -89,20 +108,20 @@
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6832331505671007" crossorigin="anonymous"></script>
 </head>
-<body>
+<body data-theme="bridal">
 <header class="site-header">
   <a class="home-logo" href="/" aria-label="GamePrintery home">
     <img src="/assets/gp-logo.svg" alt="GamePrintery" height="40">
   </a>
-  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/">Baby Shower Games</a> › <span class="crumb-current">How Well Do You Know Mommy</span></nav>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/bridal-shower-games/">Bridal Shower Games</a> › <span class="crumb-current">Shoe Game</span></nav>
 </header>
 
 <div class="wrap" style="margin-top:-40px">
   <div class="hero">
-    <h1>Free Printable How Well Do You Know Mommy?</h1>
-    <div class="deco">HOW WELL DO YOU KNOW MOMMY?</div>
-    <div class="deco-sub">Baby Shower Edition</div>
-    <p>A printable baby shower game where guests guess how the mom-to-be would answer — pick from our question list or add your own, then print instant PDFs. No email or signup.</p>
+    <h1>Free Printable Bridal Shower Shoe Game</h1>
+    <div class="deco">SHOE GAME</div>
+    <div class="deco-sub">Bridal Shower Edition</div>
+    <p>A printable bridal shower shoe game — the classic "who is more likely to…" game the couple plays with their shoes. Choose how many questions, shuffle for a fresh mix, or add your own, then print a ready-to-read host sheet. No email or signup.</p>
     <div class="badges">
       <span class="badge pink">✓ Instant PDF — no email</span>
       <span class="badge">✓ Free for commercial use</span>
@@ -110,8 +129,29 @@
   </div>
 
   <section class="panel">
+    <div class="howto">
+      <strong>How to play:</strong> Seat the bride and groom back-to-back, each holding one of the bride's shoes and one of the groom's shoes. The host reads each question aloud, and both raise the shoe of the person the answer describes — matching shoes mean they agree, mismatches are where the fun is!
+    </div>
+
     <h2>1. Choose your questions</h2>
-    <p class="hint">All questions are checked by default — uncheck any you don't want, or add your own.</p>
+    <p class="hint">Pick how many questions to show, then use the shuffle buttons for fresh ones. Check the questions you want in your game — only checked questions print.</p>
+
+    <div class="control-rows">
+      <div class="seg-group">
+        <span class="swatch-label">Questions:</span>
+        <div class="seg" id="countSeg">
+          <button type="button" data-val="10">10</button>
+          <button type="button" data-val="15">15</button>
+          <button type="button" data-val="20" class="sel">20</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar" style="margin-top:12px">
+      <button type="button" class="btn ghost" id="shuffleAllBtn">↻ Shuffle all</button>
+      <button type="button" class="btn ghost" id="shuffleSelBtn">↻ Shuffle selected</button>
+      <button type="button" class="btn ghost" id="shuffleUnselBtn">↻ Shuffle non-selected</button>
+    </div>
 
     <div class="question-list" id="questionList"></div>
 
@@ -120,7 +160,6 @@
       <button type="button" class="btn secondary" id="addQuestionBtn">Add</button>
     </div>
 
-    <div class="worksheet" id="worksheet"></div>
   </section>
 
   <section class="panel">
@@ -138,11 +177,11 @@
 
   <section class="panel">
     <h2>3. Download &amp; print</h2>
-    <p class="hint">Get a guest sheet plus a matching page for mom to fill in.</p>
+    <p class="hint">Get a ready-to-read host sheet with your questions.</p>
     <div class="btn-row">
-      <button class="btn primary" id="dlPdf">Download guest sheet + mom's answers (PDF)</button>
+      <button class="btn primary" id="dlPdf">Download question sheet (PDF)</button>
     </div>
-    <p class="foot-note">Two pages: the guest sheet, then mom's answers — matching your current questions.</p>
+    <p class="foot-note">One page — the numbered questions plus how-to-play, matching your current list.</p>
   </section>
 </div>
 
@@ -152,12 +191,12 @@
   <nav class="more-games">
     <h2>More games</h2>
     <ul>
-      <li><a href="/">← All Baby Shower Games</a></li>
-      <li><a href="/baby-shower-games/bingo/">Bingo</a></li>
-      <li><a href="/baby-shower-games/word-scramble/">Word Scramble</a></li>
-      <li><a href="/baby-shower-games/word-search/">Word Search</a></li>
-      <li><a href="/baby-shower-games/emoji-pictionary/">Emoji Pictionary</a></li>
-      <li><a href="/baby-shower-games/trivia/">Trivia</a></li>
+      <li><a href="/bridal-shower-games/">← All Bridal Shower Games</a></li>
+      <li><a href="/bridal-shower-games/bingo/">Bingo</a></li>
+      <li><a href="/bridal-shower-games/word-scramble/">Word Scramble</a></li>
+      <li><a href="/bridal-shower-games/trivia/">Trivia</a></li>
+      <li><a href="/bridal-shower-games/how-well-do-you-know-the-bride/">How Well Do You Know the Bride</a></li>
+      <li><a href="/bridal-shower-games/emoji-pictionary/">Emoji Pictionary</a></li>
     </ul>
   </nav>
   <nav class="site-nav">
@@ -176,33 +215,88 @@
 
 <script>
 const PRESET_QUESTIONS = [
-  "What is mommy's favorite food?",
-  "What is mommy's due date?",
-  "What is mommy's biggest craving right now?",
-  "What is mommy's favorite ice cream flavor?",
-  "Boy or girl — what does mommy think?",
-  "What is mommy's favorite color?",
-  "What is mommy's shoe size?",
-  "What is mommy's favorite movie?",
-  "What is the baby's planned name?",
-  "How much does mommy think the baby will weigh?",
-  "What is mommy's favorite dessert?",
-  "What is mommy's middle name?",
-  "What is mommy's favorite drink?",
-  "Who does mommy think the baby will look like?",
-  "What is mommy's favorite hobby?",
-  "What was mommy's favorite subject in school?",
-  "What is mommy's dream vacation spot?",
-  "What time of day is mommy most tired?",
-  "How many hours of sleep is mommy getting?",
-  "What is one word to describe mommy?"
+  "Who said \"I love you\" first?",
+  "Who is the better cook?",
+  "Who is the bigger flirt?",
+  "Who is messier?",
+  "Who controls the TV remote?",
+  "Who is more likely to be late?",
+  "Who spends more money?",
+  "Who is the better driver?",
+  "Who apologizes first after an argument?",
+  "Who is more stubborn?",
+  "Who planned the first date?",
+  "Who is the bigger romantic?",
+  "Who takes longer to get ready?",
+  "Who is the better dancer?",
+  "Who is more likely to cry at the wedding?",
+  "Who does more of the chores?",
+  "Who is funnier?",
+  "Who falls asleep first?",
+  "Who is the bigger foodie?",
+  "Who is more likely to plan a surprise?",
+  "Who is more likely to start a dance party?",
+  "Who is the bigger night owl?",
+  "Who is more competitive?",
+  "Who is the better gift-giver?",
+  "Who is more likely to get lost?",
+  "Who has the worse temper?",
+  "Who is more likely to forget an anniversary?",
+  "Who said they should move in together first?",
+  "Who is the bigger neat freak?",
+  "Who is more tech-savvy?",
+  "Who is more likely to hog the blankets?",
+  "Who is the pickier eater?",
+  "Who is more likely to sing in the shower?",
+  "Who spends longer on their phone?",
+  "Who is more likely to cry during a movie?",
+  "Who is more adventurous?",
+  "Who is more likely to text back first?",
+  "Who is the better travel planner?",
+  "Who is more likely to snore?",
+  "Who is the bigger scaredy-cat?",
+  "Who is the boss of the relationship?",
+  "Who is more likely to eat the last slice of pizza?",
+  "Who is more patient?",
+  "Who is the bigger shopaholic?",
+  "Who is more likely to embarrass the other in public?"
 ];
 
 function escapeHtml(s){
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-let questions = PRESET_QUESTIONS.map(text=>({text, checked:true, custom:false}));
+function shuffleArr(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+
+let bank = PRESET_QUESTIONS.map(text=>({text, custom:false}));
+let count = 20;
+let currentSet = [];
+
+function fitCount(){
+  if(currentSet.length > count){
+    const kept = currentSet.filter(q=>q.kept);
+    const rest = currentSet.filter(q=>!q.kept);
+    currentSet = [...kept, ...rest].slice(0, count);
+  } else if(currentSet.length < count){
+    const used = new Set(currentSet.map(q=>q.text));
+    const pool = shuffleArr(bank.filter(q=>!used.has(q.text)));
+    const need = count - currentSet.length;
+    pool.slice(0, need).forEach(q=> currentSet.push({text:q.text, custom:q.custom, kept:true}));
+  }
+}
+
+function replaceRows(pred){
+  const used = new Set(currentSet.map(q=>q.text));
+  const pool = shuffleArr(bank.filter(q=>!used.has(q.text)));
+  let pi = 0;
+  currentSet = currentSet.map(q=>{
+    if(pred(q) && pi < pool.length){
+      const n = pool[pi++];
+      return {text:n.text, custom:n.custom, kept:q.kept};
+    }
+    return q;
+  });
+}
 
 const THEMES = [
   {id:"blush",   name:"Blush",       color:"#E79AA2"},
@@ -231,70 +325,75 @@ function refreshSwatches(){
 buildSwatches();
 document.documentElement.style.setProperty('--wsc', selectedTheme.color);
 
+function setupSeg(id,onSelect){
+  const el=document.getElementById(id);
+  el.querySelectorAll('button').forEach(b=>{
+    b.onclick=()=>{
+      el.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      onSelect(b.dataset.val);
+    };
+  });
+}
+setupSeg('countSeg', v=>{ count=parseInt(v,10); fitCount(); renderQuestionList(); });
+document.getElementById('shuffleAllBtn').onclick=()=>{ replaceRows(()=>true); renderQuestionList(); };
+document.getElementById('shuffleSelBtn').onclick=()=>{ replaceRows(q=>q.kept); renderQuestionList(); };
+document.getElementById('shuffleUnselBtn').onclick=()=>{ replaceRows(q=>!q.kept); renderQuestionList(); };
+
 function renderQuestionList(){
   const el=document.getElementById('questionList');
-  el.innerHTML = questions.map((q,i)=>`
-    <label class="q-row">
-      <input type="checkbox" ${q.checked?'checked':''} data-i="${i}">
+  el.innerHTML = currentSet.map((q,i)=>`
+    <label class="q-row ${q.kept?'':'unkept'}">
+      <input type="checkbox" ${q.kept?'checked':''} data-i="${i}">
+      <span class="ws-num">${i+1}.</span>
       <span class="q-text">${escapeHtml(q.text)}</span>
       ${q.custom?`<button type="button" class="q-remove" data-i="${i}" aria-label="Remove question">✕</button>`:''}
     </label>`).join('');
   el.querySelectorAll('input[type=checkbox]').forEach(cb=>{
-    cb.onchange=()=>{ questions[+cb.dataset.i].checked=cb.checked; renderWorksheet(); };
+    cb.onchange=()=>{ currentSet[+cb.dataset.i].kept=cb.checked; renderQuestionList(); };
   });
   el.querySelectorAll('.q-remove').forEach(btn=>{
-    btn.onclick=()=>{ questions.splice(+btn.dataset.i,1); renderQuestionList(); renderWorksheet(); };
+    btn.onclick=()=>{
+      const q=currentSet[+btn.dataset.i];
+      bank=bank.filter(x=>x!==q);
+      currentSet=currentSet.filter(x=>x!==q);
+      renderQuestionList();
+    };
   });
-}
-
-function renderWorksheet(){
-  const el=document.getElementById('worksheet');
-  const checked=questions.filter(q=>q.checked);
-  el.innerHTML = checked.map((q,i)=>`
-    <div class="ws-row">
-      <span class="ws-num">${i+1}.</span>
-      <span class="ws-q">${escapeHtml(q.text)}</span>
-      <span class="ws-blank"></span>
-    </div>`).join('');
 }
 
 const newQuestionEl=document.getElementById('newQuestion');
 function addQuestion(){
   const val=newQuestionEl.value.trim();
   if(!val) return;
-  questions.push({text:val, checked:true, custom:true});
+  const q={text:val, custom:true, kept:true};
+  bank.push(q);
+  currentSet.push(q);
   newQuestionEl.value='';
   renderQuestionList();
-  renderWorksheet();
 }
 document.getElementById('addQuestionBtn').onclick=addQuestion;
 newQuestionEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); addQuestion(); } });
 
 const largePrintEl=document.getElementById('largePrint');
-largePrintEl.onchange=()=>{ document.getElementById('worksheet').classList.toggle('lg', largePrintEl.checked); };
+largePrintEl.onchange=()=>{ document.getElementById('questionList').classList.toggle('lg', largePrintEl.checked); };
 
 function printSheets(){
   const area=document.getElementById('printArea');
   const lgClass = largePrintEl.checked ? ' lg' : '';
-  const checked=questions.filter(q=>q.checked);
-  const rows=checked.map((q,i)=>`<div class="print-row"><span class="n">${i+1}.</span><span class="q">${escapeHtml(q.text)}</span><span class="blank"></span></div>`).join('');
+  const rows=currentSet.filter(q=>q.kept).map((q,i)=>`<div class="print-row"><span class="n">${i+1}.</span><span class="q">${escapeHtml(q.text)}</span></div>`).join('');
   area.innerHTML=`
     <div class="print-page${lgClass}">
-      <h2>How Well Do You Know Mommy?</h2>
-      <div class="guest-line">Guest name: <span class="blank-line"></span></div>
-      ${rows}
-    </div>
-    <div class="print-page${lgClass}">
-      <h2>Mom's Answers</h2>
-      <p class="sub">Fill in before the party</p>
+      <h2>Bridal Shower Shoe Game</h2>
+      <div class="print-howto"><strong>How to play:</strong> Seat the bride and groom back-to-back, each holding one of the bride's shoes and one of the groom's shoes. The host reads each question aloud, and both raise the shoe of the person the answer describes.</div>
       ${rows}
     </div>`;
   setTimeout(()=>window.print(),60);
 }
 document.getElementById('dlPdf').onclick=printSheets;
 
+fitCount();
 renderQuestionList();
-renderWorksheet();
 </script>
 </body>
 </html>

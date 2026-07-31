@@ -11,9 +11,9 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Printable Baby Shower Bingo (unique cards) — GamePrintery</title>
-<meta name="description" content="Free printable baby shower bingo cards. Pick a color and print unique cards for every guest — instant PDF, no email, no signup.">
-<link rel="canonical" href="https://gameprintery.com/baby-shower-games/bingo/">
+<title>Free Printable Bridal Shower Bingo (unique cards) — GamePrintery</title>
+<meta name="description" content="Free printable bridal shower bingo cards. Pick a color and print unique cards for every guest — instant PDF, no email, no signup.">
+<link rel="canonical" href="https://gameprintery.com/bridal-shower-games/bingo/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -100,19 +100,19 @@
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6832331505671007" crossorigin="anonymous"></script>
 </head>
-<body>
+<body data-theme="bridal">
 <header class="site-header">
   <a class="home-logo" href="/" aria-label="GamePrintery home">
     <img src="/assets/gp-logo.svg" alt="GamePrintery" height="40">
   </a>
-  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/">Baby Shower Games</a> › <span class="crumb-current">Bingo</span></nav>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/bridal-shower-games/">Bridal Shower Games</a> › <span class="crumb-current">Bingo</span></nav>
 </header>
 
 <div class="wrap" style="margin-top:-40px">
   <div class="hero">
-    <h1>Free Printable Baby Shower Bingo</h1>
+    <h1>Free Printable Bridal Shower Bingo</h1>
     <div class="deco">BINGO</div>
-    <div class="deco-sub">Baby Shower Edition</div>
+    <div class="deco-sub">Bridal Shower Edition</div>
     <p>Pick a color, then print unique cards so no two guests match. Instant PDF — no email, no signup.</p>
     <div class="badges">
       <span class="badge pink">✓ Instant PDF — no email</span>
@@ -170,12 +170,12 @@
   <nav class="more-games">
     <h2>More games</h2>
     <ul>
-      <li><a href="/">← All Baby Shower Games</a></li>
-      <li><a href="/baby-shower-games/word-scramble/">Word Scramble</a></li>
-      <li><a href="/baby-shower-games/word-search/">Word Search</a></li>
-      <li><a href="/baby-shower-games/how-well-do-you-know-mommy/">How Well Do You Know Mommy</a></li>
-      <li><a href="/baby-shower-games/emoji-pictionary/">Emoji Pictionary</a></li>
-      <li><a href="/baby-shower-games/trivia/">Trivia</a></li>
+      <li><a href="/bridal-shower-games/">← All Bridal Shower Games</a></li>
+      <li><a href="/bridal-shower-games/word-scramble/">Word Scramble</a></li>
+      <li><a href="/bridal-shower-games/trivia/">Trivia</a></li>
+      <li><a href="/bridal-shower-games/how-well-do-you-know-the-bride/">How Well Do You Know the Bride</a></li>
+      <li><a href="/bridal-shower-games/emoji-pictionary/">Emoji Pictionary</a></li>
+      <li><a href="/bridal-shower-games/shoe-game/">Shoe Game</a></li>
     </ul>
   </nav>
   <nav class="site-nav">
@@ -200,15 +200,15 @@ const THEMES = [
   {id:"sunshine",name:"Sunshine",    border:"#D9A55A", freeBg:"#F5E4C3", freeText:"#7a5a24"}
 ];
 
-const ITEMS = ["Baby bottle","Onesie","Pacifier","Rattle","Diapers","Stroller","Bib","Teddy bear",
-  "Booties","Baby blanket","Crib mobile","Baby socks","Mittens","Car seat","High chair","Baby powder",
-  "Wipes","Baby book","Bath toy","Nursing pillow","Baby monitor","Swaddle","Burp cloth","Teether",
-  "Headband","Baby shoes","Changing pad","Baby lotion"];
-const PREDICTIONS = ["Gift with no card","Dad looks nervous","Guesses baby's name","Nursing pillow gifted",
-  "Predicts due date","A toast is made","Someone says “aww”","Grandma cries",
-  "Bow saved for bouquet","Diapers opened","Cake is served","Belly gets touched",
-  "Game gets competitive","A phone rings","Baby name debated","Wrong gender guess",
-  "Everyone: “so tiny!”","Gift repeated","Clothes 0–3 mo","Applause"];
+const ITEMS = ["Lingerie","Wine glasses","Kitchen mixer","Bath towels","Scented candle","Cookware set",
+  "Silk robe","Champagne flutes","Coffee maker","Bed sheets","Recipe book","Picture frame","Jewelry box",
+  "Spa gift set","Apron","Cutting board","Flower vase","Throw pillows","Bathrobe","Gift card","Perfume",
+  "Cheese board","Cocktail shaker","Photo album","Tea towels","Serving tray","Oven mitts","Wine bottle"];
+const PREDICTIONS = ["Bride tears up","Someone says “aww”","A toast is made","Bride blushes",
+  "Gift with no card","Mom of bride cries","Ribbon bouquet made","Champagne poured",
+  "Guesses wedding date","Advice card written","Groom gets mentioned","“When's the big day?”",
+  "Bride guesses wrong","A funny story shared","Recipe is shared","Everyone toasts",
+  "Kiss story told","A phone rings","Gift repeated","Applause"];
 const POOL = [...ITEMS, ...PREDICTIONS];
 
 function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
@@ -219,7 +219,7 @@ function cardHTML(cells,t,cut){
   const style=`--t-border:${t.border};--t-free-bg:${t.freeBg};--t-free-text:${t.freeText}`;
   const g=cells.map(c=>`<div class="cell">${c.text}</div>`).join("");
   return `<div class="bingo${cut?' cut':''}" style="${style}">
-    <div class="cap"><div class="title">B I N G O</div><div class="sub">Baby Shower Edition</div></div>
+    <div class="cap"><div class="title">B I N G O</div><div class="sub">Bridal Shower Edition</div></div>
     <div class="grid">${g}</div></div>`;
 }
 
