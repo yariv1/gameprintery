@@ -329,6 +329,10 @@ function selectRandomQuestions(){
 }
 document.getElementById('shuffleBtn').onclick=()=>{
   selectRandomQuestions();
+  // randomize display order of the checked questions so the list visibly reshuffles at any count
+  const checked = questions.filter(qq=>qq.checked);
+  const unchecked = questions.filter(qq=>!qq.checked);
+  questions = [...shuffleArr(checked), ...unchecked];
   buildCurrentSet();
   renderQuestionList();
 };
