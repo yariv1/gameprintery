@@ -46,6 +46,26 @@
 }
 
 *{box-sizing:border-box}
+[data-theme="bachelorette"]{
+  --bg-base:#FDF0F5;
+  --bg-glow-1:#FBD5E6;
+  --bg-glow-2:#EBD9F2;
+  --accent:#D6336C;
+  --accent-shadow:rgba(214,51,108,.38);
+  --heading:#8A1E4C;
+  --focus:#D6336C;
+  --dot:#C77DBB;
+  --line:#F0D9E4;
+  --badge-bg:#E4C9EE;
+  --badge-ink:#5E2A63;
+  --badge-pink-bg:#F6A9CB;
+  --badge-pink-ink:#8A1E4C;
+  --deco-1:#D6336C;
+  --deco-2:#A24EA8;
+  --deco-3:#E0A73E;
+  --gold:#C9A35B;
+}
+
 body{margin:0;font-family:'Nunito',sans-serif;color:var(--ink);line-height:1.55;
   background:radial-gradient(circle at 12% 8%,var(--bg-glow-1) 0,transparent 40%),
     radial-gradient(circle at 88% 4%,var(--bg-glow-2) 0,transparent 38%),var(--bg-base);}
